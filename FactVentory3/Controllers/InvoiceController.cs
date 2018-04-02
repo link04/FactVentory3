@@ -25,6 +25,7 @@ namespace FactVentory3.Controllers
         public IActionResult Get()
         {
             return Ok(
+                
                 _invoiceService.GetAll()
                 );
         }

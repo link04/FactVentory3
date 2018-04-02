@@ -1,58 +1,87 @@
 <template>
-<div >
+<div>
 <h2>{{pageTitle}} </h2>
 
-<div style="background-color:white; padding:3%">
+ <br>
+ {{moment("1995-12-25").format('L')}} 
+<br>
+ {{moment("2016-02-02", "YYYY-MM-DD").format('L')}}
+<br>
+ {{moment("2016-02-02T00:00:00",moment.ISO_8601).format('L')}}
+ <br>
 
 <el-form v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="90px"  class="demo-ruleForm">
-  
-  <el-form-item label="Nombre" prop="companyName">
-    <el-input v-model="form.companyName" style="width:900px" ></el-input>
+
+  <el-form-item label="Nombre" prop="fullName">
+    <el-input v-model="form.fullName" style="width:900px" ></el-input>
   </el-form-item>
 
-  <el-form-item label="Email" prop="email" >
-    <el-input v-model="form.email" style="width:900px" ></el-input>
+  <el-form-item label="Fecha" prop="invoiceDate" >
+    <el-input v-model="form.invoiceDate" style="width:900px" ></el-input>
   </el-form-item>
 
-  <el-form-item label="Telefono" prop="phoneNumber">
-          <input class="el-input__inner" style="width:900px" v-model="form.phoneNumber"  v-on:keypress="isNumber(event)">
+  <el-form-item label="Fecha Limite" prop="dueDate">
+          <input class="el-input__inner" style="width:900px" v-model="form.dueDate" >
  
   </el-form-item>
-<!--
+
+<el-form-item label="Fecha Limite" prop="dueDate">
+       <div class="block">
+    <el-date-picker readonly
+      v-model="form.dueDate"
+      type="date"
+      placeholder="Pick a Date"
+      format="yyyy/MM/dd">
+    </el-date-picker>
+  </div>
+  </el-form-item>
+
+<template>
+    <div>
+        <datepicker v-model="date"></datepicker>
+    </div>
+</template>
+
   <el-form-item label="Direccion"  prop="address">
     <el-input v-model="form.address" style="width:900px"></el-input>
   </el-form-item>
--->
+
  <el-form-item>
     <el-button icon="el-icon-circle-check-outline" @click="save" type="primary">Guardar</el-button>
   </el-form-item>
 
- <el-button  style="float:left;" size="small" icon="el-icon-back"  @click="$router.push(`/salesPersons`)" type="text">Volver a la Lista</el-button>
+ <el-button  style="float:left;" size="small" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
  
 </el-form>
 
   
  <br/>
-</div>
+
 
 </div>
 </template>
 
 <script>
+var moment=require('moment');
 export default {
-  name: "CompanyCreateOrUpdate",
+  name: "InvoiceCreateOrUpdate",
   data() {
     return {
+      moment:moment,
       loading: false,
       form: {
-        companyId: 0,
-        companyName: null,
+         
+        costumerId: 0,
+        fullName: null,
         email: null,
         phoneNumber: null,
-        address: null
-      },
+        address: null,
+      dueDate:null,
+      }
+       
+       ,
       rules: {
-        companyName: [
+        fullName: [
           { required: true, message: "Debe ingresar un nombre" },
           { min: 3, message: "El Nombre debe contener mas de 3 caracteres " }
         ],
@@ -68,13 +97,13 @@ export default {
             message: "El telefono de ser un numero de 10 digitos"
           }
         ],
-        
+        address: [{ required: true, message: "Debe por lo menos ingresar la ciudad" }]
       }
     };
   },
   computed: {
     pageTitle() {
-      return this.form.comapanyId === 0 ? "Nuevo Vendedor" : "Editar Vendedor" ;
+      return this.form.costumerId === 0 ? "Nueva Factura" : "Editar Factura";
     } 
   },
   created() {
@@ -97,15 +126,15 @@ export default {
       let self = this;    
 
        self.loading = true;
-       self.$store.state.services.companyService
+       self.$store.state.services.invoiceService
             .get(id)
             .then(r => {
               self.loading = false;
-              self.form.companyId = r.data.companyId;
-              self.form.companyName = r.data.companyName;
-              self.form.email = r.data.email;
-              self.form.phoneNumber = r.data.phoneNumber;
-              self.form.address = r.data.address;
+              self.form.invoiceId = r.data.invoiceId;
+              self.form.dueDate = r.data.dueDate;
+              //self.form.invoiceDate = moment("1995-12-25").format('L');
+            
+              self.form.invoiceDate = moment(r.data.invoiceDate,moment.ISO_8601).format('L');
             })
             .catch(r => {
               self.$message({
@@ -120,12 +149,12 @@ export default {
         if (valid) {
          self.loading = true;
 
-           if(self.form.companyId > 0 ){
-          self.$store.state.services.companyService
+           if(self.form.costumerId > 0 ){
+          self.$store.state.services.invoiceService
             .update(self.form)
             .then(r => {
               self.loading = false;
-              self.$router.push('/salesPersons');
+              self.$router.push('/costumers');
             })
             .catch(r => {
               self.$message({
@@ -135,11 +164,11 @@ export default {
             });
       }else{ 
          
-          self.$store.state.services.companyService
+          self.$store.state.services.invoiceService
             .add(self.form)
             .then(r => {
               self.loading = false;
-              self.$router.push('/salesPersons');
+              self.$router.push('/invoices');
             })
             .catch(r => {
               self.$message({

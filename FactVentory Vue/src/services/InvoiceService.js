@@ -1,10 +1,10 @@
-class CompanyService {
+class InvoiceService {
     axios
     baseUrl
 
     constructor(axios,apiUrl) {
         this.axios = axios
-        this.baseUrl = `${apiUrl}company`    
+        this.baseUrl = `${apiUrl}invoice`    
     }
 
     get(id) {
@@ -31,4 +31,4 @@ class CompanyService {
     }
 
 }
-export default CompanyService
+export default InvoiceService

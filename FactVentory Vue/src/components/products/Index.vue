@@ -1,14 +1,18 @@
 <template>
 <div >
-<h2>Productos</h2>
 
-<div   style="margin: 15px 0" >
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h2>Productos</h2></div>
+  <div   style="margin: 15px 0" class="panel-body">
 <el-button  icon="el-icon-plus"  type="primary"  @click="$router.push(`/products/add`)">Agregar Producto</el-button>
+  </div>
 
-</div>
 
 
- <el-table   stripe  v-loading="loading" :data="data" height="480"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+
+ <el-table   stripe  height="440px"  v-loading="loading" :data="data"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
 
       <el-table-column prop="productName"  label="Producto"  sortable> </el-table-column>
       <el-table-column prop="unitPrice"  label="Precio por Unidad"  sortable></el-table-column>
@@ -16,12 +20,17 @@
       <el-table-column prop="description"  label="Descripcion"  sortable></el-table-column>
      <el-table-column align="center">
 <template slot-scope="scope" >
-<el-button icon="el-icon-edit"  type="warning" title="Editar" @click="$router.push(`/products/${scope.row.productId}/edit`)"></el-button>
-<el-button  icon="el-icon-delete" type="danger" title="Eliminar" @click="remove(scope.row.productId)">  </el-button>
+          <el-tooltip class="item" effect="dark" content="Editar" placement="top-start">
+</el-tooltip>
+<el-button icon="el-icon-edit"  type="warning"  @click="$router.push(`/products/${scope.row.productId}/edit`)"></el-button>
+        <el-tooltip class="item" effect="dark" content="Eliminar" placement="top-start">
+
+<el-button  icon="el-icon-delete" type="danger"  @click="remove(scope.row.productId)">  </el-button>
+        </el-tooltip>
   </template>
      </el-table-column>
-     
     </el-table>
+    </div>
 </div>
 </template>
 

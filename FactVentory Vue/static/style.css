@@ -1,43 +1,130 @@
-html{
-position: relative;  
 
-}
 body {
   font-family: 'Roboto';
   margin: 0px;
-  background: #fff;
+ 
   color: #2D2F33;
+overflow: hidden;
 
 }
 
 .el-container .el-header:first-child {
   background: #2D2F33;
   color:#fff;
- 
- 
-}
-.el-menu {
-  color:#fff;
-  background: #2D2F33;
-  height:100%;
-  width:240px;
-  position: fixed;
   
+
 }
+
+.el-main{
+ padding-left:2%;
+ padding-right:6%;
+ height:300px;
+
+}
+/*
+.nav{
+  width:240px;
+  background: #2D2F33;
+  position: relative; 
+ 
+  height:100vh;
+
+   
+}
+
+.azare{
+  max-height:100vh; /* or whatever width you want.   
+}
+*/
 .el-menu-item{
-  color:#fff;
+
+    color:rgba(255, 255, 255, 0.932);
+
 } 
-.el-footer {
-  bottom: 0;
-  position: fixed;
+.el-menu{
+  background-color: #2D2F33;
+  height: 100vh;
+ 
 }
 .menu-title{
   padding:15px;
   float:center; 
-   background-color: rgb(54, 56, 61);
+  background-color: rgb(96, 101, 109);
    color:rgba(255, 255, 255, 0.932);
    padding-left: 50px;
 
+}
+/*no tocar*/
+.panel-default>.panel-heading {
+  color: #333;
+  background-color: rgba(221, 221, 221, 0.685);;
+  border-color: rgba(221, 221, 221, 0.76);
+  border-style:line;
+  border:1px solid rgb(153, 153, 153);
 
+  
+}
+.panel-heading {
+  border:1px  rgb(102, 102, 102);
+  padding: 1px 15px;
+  border-bottom: 1px solid #443f3f00;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  
+}
+
+.el-header, {
+  background-color: #B3C0D1;
+  color: #333;
+ 
+}
+.el-footer {
+  background-color: rgba(179, 192, 209, 0.555);
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+
+}
+
+.el-aside {
+  
+  color:rgba(255, 255, 255, 0.932);
+}
+
+.el-main {
+  height:650px;
+  padding-top:40px;
+  padding-left: 65px;
+  background-color: #E9EEF3;
+
+
+}
+
+element.style {
+  width: 230px;
+}
+.div-left{
+  float:left;
+  padding:20px; 
+  
+}
+.div-right{
+  float:right;
+  padding:20px; 
+  
+}
+.the-div{
+  position:relative;
+   height:580px;  
+   background-color:white; 
+   color: #333;
+   border-color: rgba(221, 221, 221, 0.76);
+   border-style:line;
+   border:1px solid rgb(153, 153, 153);
+   font-size:13px;
+}
+.bottom-div{
+  position:absolute; 
+  bottom:0;
 }
 

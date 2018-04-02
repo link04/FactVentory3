@@ -6,6 +6,10 @@ import Vue from 'vue'
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/es'
 import 'element-ui/lib/theme-chalk/index.css'
+import datepicker from 'vue-date'
+
+import printJS from 'print-js';
+
 
 // App
 import App from './App'

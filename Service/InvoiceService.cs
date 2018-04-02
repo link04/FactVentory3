@@ -31,10 +31,21 @@ namespace Service
         public IEnumerable<Invoice> GetAll()
         {
             var result = new List<Invoice>();
-
+          
             try
             {
+                for (int i = 1; i <= 5; i++)
+                {
+
+                }
+
+
+                    DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
+                    String.Format("{0:MM/dd/yyyy}", dt);  
+                
+          
                 result = _costumerDbContext.Invoice.ToList();
+
             }
             catch (System.Exception)
             {
@@ -86,9 +97,13 @@ namespace Service
                 originalModel.BalanceDue = model.BalanceDue;
                 originalModel.Notes = model.Notes;
                 originalModel.Status = model.Notes;
+               
                 originalModel.InvoiceDate = model.InvoiceDate;
                 originalModel.DueDate = model.DueDate;
                 originalModel.Status = model.Notes;
+                originalModel.Costumer = model.Costumer;
+                originalModel.Company = model.Company;
+
 
 
                 _costumerDbContext.Update(originalModel);

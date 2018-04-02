@@ -4,16 +4,16 @@
   <el-header>
     <h1>FactVentory</h1>
   </el-header>
-  <el-container >
-    <el-aside  >
+  <el-container   >
+    <el-aside style="width:235px;" >
       <navegationmenu ></navegationmenu>
     </el-aside>
-    <el-container>
-      <el-main>
+    <el-container style=" height:710px;" >
+      <el-main  >
         <el-row>
-          <el-col :span="24">
+          <el-col >
 
-            <router-view style="padding-left:2%;padding-right:2%;" ></router-view>
+            <router-view   ></router-view>
             
           </el-col>
         </el-row>

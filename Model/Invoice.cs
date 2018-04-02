@@ -11,7 +11,10 @@ namespace Model
         public int CostumerId { get; set; }
         public int CompanyId { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime InvoiceDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DueDate { get; set; }
 
         public float TotalAmount { get; set; }

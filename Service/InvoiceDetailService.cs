@@ -84,7 +84,10 @@ namespace Service
                 originalModel.UnitPrice = model.UnitPrice;
                 originalModel.Total = model.Total;
                 originalModel.InvoiceId = model.InvoiceId;
-                
+                originalModel.Product = model.Product;
+
+             
+
                 _costumerDbContext.Update(originalModel);
                 _costumerDbContext.SaveChanges();
             }

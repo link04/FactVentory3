@@ -2,7 +2,6 @@
 
 <el-menu default-active="0" >
  
-
         <p class="menu-title" ><em >Menu Principal</em></p>
 
     <template   v-for="item, i in items">
@@ -28,7 +27,6 @@
     </template>
 </el-menu>
 
-
 </template>
 
 <script>
@@ -39,7 +37,8 @@ export default {
       { icon: "dashboard", text: "Dashboard", path: "/" },
       { icon: "user", text: "Clientes", path: "/costumers" },
       { icon: "apple", text: "Productos", path: "/products" },
-      { icon: "briefcase", text: "Companias", path: "/companies" },
+      { icon: "usd", text: "Vendedores", path: "/salesPersons" },
+      { icon: "shopping-cart", text: "Facturas", path: "/invoices" },
      
       
 
