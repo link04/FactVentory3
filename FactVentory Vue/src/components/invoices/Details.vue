@@ -16,7 +16,7 @@
 
 <label >Cliente</label>
 <br>
-<el-tag  size="default" prop="costumerId" v-text="form.costumerId">  </el-tag>
+<el-tag  size="default" prop="costumerId" v-text="form.costumer">  </el-tag>
 </div>
 
 <div  class="div-right">
@@ -103,7 +103,6 @@
 <script>
 import index from "@/components/invoiceDetails/Index";
 
-
 var moment=require('moment');
 
 export default {
@@ -116,6 +115,7 @@ export default {
   }
   ,
   name: "InvoiceDetail",
+  name: "CostumerCreateOrUpdate",
   data() {
     return {
       moment:moment,
@@ -174,19 +174,7 @@ export default {
       
  printJS({printable:'printableArea', type:'html', showModal:true,honorMarginPadding:true, maxWidth:1000 ,targetStyle:'*' });
     },
-    /*
-  printDiv(divName) {
-  var printContents = document.getElementById(divName).innerHTML;
-  var popupWin = window.open('', '_blank', 'width=900px,height=900px');
-  popupWin.document.open();
-  popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
-  popupWin.document.close();
-  if(popupWin.document == close())
-  {
-    popupWin.close();
-  }
-  
-}, */ 
+   
  isNumber: function(evt) {
       evt = (evt) ? evt : window.event;
       var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -196,6 +184,7 @@ export default {
         return true;
       }
       },
+      
     get(id) {
      if(id == undefined)return;
 
@@ -219,7 +208,6 @@ export default {
               self.form.notes = r.data.notes;
               self.form.costumer = r.data.costumer;
               self.form.company = r.data.company;
-              var sex=self.form.companyId;
             })
             .catch(r => {
               self.$message({
@@ -227,22 +215,9 @@ export default {
                 type: "error"
               });
             });  
-
-             self.$store.state.services.costumerService
-            .get(data.costumerId)
-            .then(r => {
-              self.loading = false;
-              self.form.fullName = r.data.fullName;
-              self.form.email = r.data.email;
-            
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
-              });
-            });       
-    }, remove(id) {
+      
+    },
+     remove(id) {
       let self = this;
 
       self

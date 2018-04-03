@@ -23,8 +23,8 @@
 <p id="demo"> </p>
 -->
  <el-table   height="440px" size="small" stripe  v-loading="loading" :data="data"   highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
-
-      <el-table-column fixex="top" prop="invoiceId"  label="# Factura" width="100" sortable> </el-table-column>
+<br>
+      <el-table-column  prop="invoiceId"  label="# Factura" width="100" sortable> </el-table-column>
       <el-table-column prop="invoiceDate" label="Fecha"  sortable>
         <template slot-scope="scope">
             {{moment(scope.row.invoiceDate,moment.ISO_8601).format('L') }}
@@ -35,7 +35,7 @@
             {{moment(scope.row.dueDate,moment.ISO_8601).format('L') }}
         </template>
       </el-table-column>
-   
+     <el-table-column prop="invoiceId"  label="Total"  width="100" sortable></el-table-column> 
       <el-table-column prop="totalAmount"  label="Total"  width="100" sortable></el-table-column>
       <el-table-column prop="amountPaid"  label="Total Pagado"  sortable></el-table-column>
       <el-table-column prop="balanceDue"  label="Total Pendiente"  sortable></el-table-column>
@@ -43,7 +43,7 @@
       <el-table-column prop="notes"  label="Notas"  sortable></el-table-column>
       <el-table-column fixed="right" width="100">
        <template slot-scope="scope">
-        <el-button @click="$router.push(`/invoices/${scope.row.invoiceId}/details`)" type="text" size="small">Detail</el-button>
+        <el-button @click="$router.push(`/invoiceDetails/${scope.row.invoiceId}/`)" type="text" size="small">Detail</el-button>
       </template>
     </el-table-column>
      <!--

@@ -11,6 +11,7 @@ class InvoiceService {
         let self = this;
         return self.axios.get(`${self.baseUrl}/${id}`);
     }
+    
     getAll() {
         let self = this;
         return self.axios.get(`${self.baseUrl}`);

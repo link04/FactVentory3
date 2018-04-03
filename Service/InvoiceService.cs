@@ -14,7 +14,8 @@ namespace Service
          bool Delete(int id);
          bool Update(Invoice model);
         Invoice Get(int id);
-         
+
+
     }
 
     public class InvoiceService : IInvoiceService
@@ -34,17 +35,8 @@ namespace Service
           
             try
             {
-                for (int i = 1; i <= 5; i++)
-                {
-
-                }
-
-
-                    DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
-                    String.Format("{0:MM/dd/yyyy}", dt);  
-                
           
-                result = _costumerDbContext.Invoice.ToList();
+              result = _costumerDbContext.Invoice.ToList();
 
             }
             catch (System.Exception)
@@ -61,6 +53,7 @@ namespace Service
             try
             {
                 result = _costumerDbContext.Invoice.Single(x => x.InvoiceId == id);
+
             }
             catch (System.Exception)
             {
@@ -69,12 +62,16 @@ namespace Service
             return result;
         }
 
+      
+ 
+
         public bool Add(Invoice model)
         {
             try
-            {
+            { 
                 _costumerDbContext.Add(model);
                 _costumerDbContext.SaveChanges();
+               
             }
             catch(System.Exception)
             {
@@ -90,14 +87,19 @@ namespace Service
                 var originalModel = _costumerDbContext.Invoice.Single(x =>
                 x.InvoiceId == model.InvoiceId
                 );
+
+
                 originalModel.CostumerId = model.CostumerId;
-                originalModel.CompanyId = model.CostumerId;
+                originalModel.CompanyId = model.CompanyId;
                 originalModel.TotalAmount = model.TotalAmount;
                 originalModel.AmountPaid = model.AmountPaid;
                 originalModel.BalanceDue = model.BalanceDue;
                 originalModel.Notes = model.Notes;
                 originalModel.Status = model.Notes;
-               
+
+
+          
+
                 originalModel.InvoiceDate = model.InvoiceDate;
                 originalModel.DueDate = model.DueDate;
                 originalModel.Status = model.Notes;

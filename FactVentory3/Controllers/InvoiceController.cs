@@ -29,7 +29,7 @@ namespace FactVentory3.Controllers
                 _invoiceService.GetAll()
                 );
         }
-
+        
         // GET api/values/5s
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -38,7 +38,7 @@ namespace FactVentory3.Controllers
                  _invoiceService.Get(id)
                  );
         }
-
+      
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody] Invoice model)
@@ -57,6 +57,7 @@ namespace FactVentory3.Controllers
                 );
         }
 
+       
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
