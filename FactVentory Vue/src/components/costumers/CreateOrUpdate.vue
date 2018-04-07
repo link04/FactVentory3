@@ -1,7 +1,7 @@
 <template>
 <div>
 <h2>{{pageTitle}} </h2>
-
+<div  style="background-color:white; padding:3%">
 <el-form v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="90px"  class="demo-ruleForm">
   
   <el-form-item label="Nombre" prop="fullName">
@@ -31,7 +31,7 @@
 
   
  <br/>
-
+</div>
 
 </div>
 </template>

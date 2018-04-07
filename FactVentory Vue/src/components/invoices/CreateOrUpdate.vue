@@ -1,149 +1,186 @@
 <template>
-<div>
-<h2>{{pageTitle}} </h2>
+<div  >
 
- <br>
- {{moment("1995-12-25").format('L')}} 
+  <!-- Default panel contents -->
+  <div class="panel-heading: float:top;padding-top:50px"><h2>Crear Factura</h2></div>
+
+<div style="background-color:white;padding:40px" >
+
+<el-form v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true" size="mdium" class="demo-ruleForm"> 
+
+     <el-form-item prop="costumer" label="Cliente"  >
+      <el-select v-model="form.costumer" >
+      <el-option v-bind:key="item" v-for="item in fullname2" :value="item.fullName">{{item.fullName}}
+         </el-option>
+     </el-select>
+     </el-form-item>
+
+  <el-form-item prop="invoiceDate" label="Fecha de Factura" >
+      <el-date-picker type="date" placeholder="Elija su Fecha" v-model="form.invoiceDate" style="width: 100%;"></el-date-picker>
+  </el-form-item>
+
+    <el-form-item prop="dueDate" label="Fecha Limite" >
+      <el-date-picker type="date" placeholder="Elija su Fecha"  v-model="form.dueDate" style="width: 100%;"></el-date-picker>
+  </el-form-item>
+
+  <el-form-item label="Notas" prop="notes" >
+    <el-input type="textarea" v-model="form.notes" style="width:400px; " placeholder="Ingrese notas de la factura"></el-input>
+  </el-form-item>
+
+  <el-form-item style="float:right; " >
+
+      <el-form-item prop="totalAmount" >
+        <label>Monto Total</label><br>
+              <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;" v-model="form.totalAmount" disabled>
+        </el-form-item> 
 <br>
- {{moment("2016-02-02", "YYYY-MM-DD").format('L')}}
-<br>
- {{moment("2016-02-02T00:00:00",moment.ISO_8601).format('L')}}
+      <el-form-item  prop="amountPaid" >  
+          <label>Monto Pagado  </label><br>
+          <input class="el-input__inner" style="width:100px;height:30px;" v-model="form.amountPaid"  v-on:keypress="isNumber(event)">
+  </el-form-item>  
  <br>
-
-<el-form v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="90px"  class="demo-ruleForm">
-
-  <el-form-item label="Nombre" prop="fullName">
-    <el-input v-model="form.fullName" style="width:900px" ></el-input>
+        <el-form-item prop="balanceDue" > 
+           <label>Balance Pendiente</label><br>
+          <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;" v-model="form.balanceDue" disabled  >
+       </el-form-item>  
+<br>
+ </el-form-item>  
+<br>
+        <el-form-item prop="status"  label="Estado">
+    <el-radio-group v-model="form.status" size="medium">
+      <el-radio border label="Pago"></el-radio>
+      <el-radio border label="Pendiente"></el-radio>
+    </el-radio-group>
   </el-form-item>
 
-  <el-form-item label="Fecha" prop="invoiceDate" >
-    <el-input v-model="form.invoiceDate" style="width:900px" ></el-input>
-  </el-form-item>
-
-  <el-form-item label="Fecha Limite" prop="dueDate">
-          <input class="el-input__inner" style="width:900px" v-model="form.dueDate" >
- 
-  </el-form-item>
-
-<el-form-item label="Fecha Limite" prop="dueDate">
-       <div class="block">
-    <el-date-picker readonly
-      v-model="form.dueDate"
-      type="date"
-      placeholder="Pick a Date"
-      format="yyyy/MM/dd">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-
-<template>
-    <div>
-        <datepicker v-model="date"></datepicker>
-    </div>
-</template>
-
-  <el-form-item label="Direccion"  prop="address">
-    <el-input v-model="form.address" style="width:900px"></el-input>
-  </el-form-item>
-
+<br>
  <el-form-item>
     <el-button icon="el-icon-circle-check-outline" @click="save" type="primary">Guardar</el-button>
   </el-form-item>
-
- <el-button  style="float:left;" size="small" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
+<br>
  
 </el-form>
-
-  
- <br/>
-
+<el-button  style="float:left;" size="small" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
+ 
+</div>
 
 </div>
 </template>
 
 <script>
-var moment=require('moment');
 export default {
   name: "InvoiceCreateOrUpdate",
   data() {
     return {
-      moment:moment,
+      fullname2: [],
+      ass: "yaasssss",
       loading: false,
       form: {
-         
+        invoiceId: 0,
         costumerId: 0,
-        fullName: null,
-        email: null,
-        phoneNumber: null,
-        address: null,
-      dueDate:null,
-      }
-       
-       ,
-      rules: {
-        fullName: [
-          { required: true, message: "Debe ingresar un nombre" },
-          { min: 3, message: "El Nombre debe contener mas de 3 caracteres " }
-        ],
-        email: [
-          { required: true, message: "Debe ingresar un email" },
-          { type: "email", message: "Formato de Email incorrecto" }
-        ],
-        phoneNumber: [
-          { required: true, message: "Debe ingresar un telefono" },
-          {
-            min: 10,
-            max: 10,
-            message: "El telefono de ser un numero de 10 digitos"
-          }
-        ],
-        address: [{ required: true, message: "Debe por lo menos ingresar la ciudad" }]
-      }
-    };
-  },
-  computed: {
-    pageTitle() {
-      return this.form.costumerId === 0 ? "Nueva Factura" : "Editar Factura";
-    } 
+        companyId: 0,
+
+        invoiceDate: null,
+        dueDate: null,
+        totalAmount: null,
+        amountPaid: null,
+        balanceDue: null,
+
+        status: null,
+        notes: null,
+
+        costumer: null,
+        company: null
+      }, rules: {
+          amountPaid: [
+            { required: true, message: 'Inserte monto', trigger: 'blur' },
+          ],
+          costumer: [
+            { required: true, message: 'Por favor seleccione cliente', trigger: 'change' }
+          ],
+          invoiceDate: [
+            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'change' }
+          ],
+          dueDate: [
+            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'change' }
+          ],
+          status: [
+            { required: true, message: 'Por favor seleccion estado ', trigger: 'change' }
+          ],
+          notes: [
+            { required: true, message: 'Por favor digite notas ', trigger: 'blur' }
+          ]
+        }
+      };
   },
   created() {
     let self = this;
-    self.get(self.$route.params.id);
-    },
-  methods: { 
+    self.getAll();
+  },
+  methods: {
     isNumber: function(evt) {
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
         evt.preventDefault();
       } else {
         return true;
       }
-      },
-    get(id) {
+    },
+    getAll() {
+      let self = this;
+      self.loading = true;
+      self.$store.state.services.costumerService
+        .getAll()
+        .then(r => {
+          self.loading = false;
+          self.fullname2 = r.data;
+        })
+        .catch(r => {
+          self.$message({
+            message: "Ocurrio un error inesperado.",
+            type: "error"
+          });
+        });
+    },
+     get(id) {
      if(id == undefined)return;
 
       let self = this;    
+  self.loading = true;
 
-       self.loading = true;
        self.$store.state.services.invoiceService
+       
             .get(id)
             .then(r => {
               self.loading = false;
               self.form.invoiceId = r.data.invoiceId;
+              self.form.costumerId = r.data.costumerId;
+              self.form.companyId = r.data.companyId;
+              self.form.invoiceDate = r.data.invoiceDate;
               self.form.dueDate = r.data.dueDate;
-              //self.form.invoiceDate = moment("1995-12-25").format('L');
-            
-              self.form.invoiceDate = moment(r.data.invoiceDate,moment.ISO_8601).format('L');
+              self.form.totalAmount = r.data.totalAmount;
+              self.form.amountPaid = r.data.amountPaid;
+              self.form.balanceDue = r.data.balanceDue;
+              self.form.status = r.data.status;
+              self.form.notes = r.data.notes;
+              self.form.costumer = r.data.costumer;
+              self.form.company = r.data.company;
             })
             .catch(r => {
               self.$message({
                 message: "Ocurrio un error inesperado.",
                 type: "error"
               });
-            });      
-    },
-    save() {
+            });  
+      
+    }
+    ,
+       save() {
       let self = this;
       self.$refs["ruleForm"].validate(valid => {
         if (valid) {
@@ -154,7 +191,7 @@ export default {
             .update(self.form)
             .then(r => {
               self.loading = false;
-              self.$router.push('/costumers');
+              self.$router.push('/invoices');
             })
             .catch(r => {
               self.$message({
@@ -179,7 +216,7 @@ export default {
       }
         }
       });
-    },
-}
+    }
+  }
 };
 </script>

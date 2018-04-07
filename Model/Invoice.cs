@@ -24,6 +24,7 @@ namespace Model
         public string Status { get; set; }
         public string Notes { get; set; }
 
+        public List<InvoiceDetail> details { get; set; }
         public virtual Costumer Costumer { get; set; }
         public virtual Company Company { get; set; }
     }

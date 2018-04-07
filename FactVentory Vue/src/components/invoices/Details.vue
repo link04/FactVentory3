@@ -16,7 +16,7 @@
 
 <label >Cliente</label>
 <br>
-<el-tag  size="default" prop="costumerId" v-text="form.costumer">  </el-tag>
+<el-tag  size="default" prop="costumerId" v-text="form.costumerId">  </el-tag>
 </div>
 
 <div  class="div-right">

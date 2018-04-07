@@ -1,46 +1,15 @@
 <template >
 <div>
-   <h2></h2>
-   <a v-bind:href="url"></a>
- <el-table size="small" stripe  :data="data" height="200px"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+  <el-table size="small" stripe  :data="data" height="200px"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
     
-        <el-table-column  label="ID" sortable>
-           
-         <span  v-if="scope.row.invoiceId=== data.id " slot-scope="scope" >
-           {{scope.row.invoiceId}}
-         </span>
-      
-         </el-table-column>
-
-       <el-table-column    label="Productos" sortable>
-          <span  v-if="scope.row.invoiceId=== id  " slot-scope="scope">
-            {{scope.row.invoiceId}}
-            </span>
-      </el-table-column>
-     
-      <el-table-column   label="Precio"  sortable>
-         <span v-if="scope.row.invoiceId===id " slot-scope="scope" >
-           {{scope.row.unitPrice}}
-           </span>
-      </el-table-column>
-
-  <el-table-column label="Cantidad"   sortable>
-          <span v-if="scope.row.invoiceId=== id " slot-scope="scope" >
-            {{scope.row.quantity}}
-            </span>
-      </el-table-column>
-
-  <el-table-column label="Total" sortable>
-          <span  v-if="scope.row.invoiceId===id "  slot-scope="scope">
-            {{scope.row.total}}
-            </span>
-      </el-table-column>
-
+         <el-table-column   prop="invoiceId"  label="ID" sortable>  </el-table-column>
+         <el-table-column prop="productId"  label="Productos" sortable>   </el-table-column>
+         <el-table-column prop="unitPrice"  label="Precio"  sortable>   </el-table-column>
+         <el-table-column prop="quantity"  label="Cantidad"   sortable></el-table-column>
+         <el-table-column prop="total"   label="Total" sortable></el-table-column>  
+  
     </el-table>
- <a> {{id}}</a>
-
     </div>
-
 </template>
 
 <script >
@@ -49,26 +18,12 @@ export default {
   name: "InvoiceDetailIndex",
   data() {
     return {
-id:this.$route.params.id,
-  
-      moment:moment,
-      data: [
-        {
-          productId: 0,
-          invoiceId: 0,
-          quantity: null,
-          unitPrice: null,
-          total: null
-        }
-      ],
+      //id: this.$route.params.id,
 
-      /*form: {
-      productId:0,
-        invoiceId:0,
-        quantity:null,
-        unitPrice:null,
-        total:null
-    }*/
+      moment: moment,
+      data: [ ]
+      ,
+
       loading: false
     };
   },
@@ -79,24 +34,20 @@ id:this.$route.params.id,
   },
   created() {
     let self = this;
-    self.getAll();
+    self.get(this.$route.params.id);
   },
 
-  methods: {
- 
+  methods: {/*
     getAll() {
       let self = this;
       self.loading = true;
-      //if(id == this.form.invoiceId)
       self.$store.state.services.invoiceDetailService
 
         .getAll()
         .then(r => {
           self.loading = false;
-        
           self.data = r.data;
-          self.data.invoiceId = r.data.invoiceId;
-
+   
         })
         .catch(r => {
           self.$message({
@@ -104,23 +55,24 @@ id:this.$route.params.id,
             type: "error"
           });
         });
-    },/*
-    
+    } 
+    */
    get(id) {
  if(id == undefined)return;
-
       let self = this;    
-
        self.loading = true;
        self.$store.state.services.invoiceDetailService
             .get(id)
             .then(r => {
               self.loading = false;
+               self.data = r.data;
+               /*
               self.form.productId = r.data.productId;
               self.form.quantity = r.data.quantity;
               self.form.unitPrice = r.data.unitPrice;
               self.form.total = r.data.total;
               self.form.invoiceId = r.data.invoiceId;
+              */
             })
             .catch(r => {
               self.$message({
@@ -128,7 +80,7 @@ id:this.$route.params.id,
                 type: "error"
               });
             });      
-   },*/
+},
     remove(id) {
       let self = this;
 

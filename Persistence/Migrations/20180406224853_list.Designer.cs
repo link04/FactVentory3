@@ -11,9 +11,10 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CostumerDbContext))]
-    partial class CostumerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180406224853_list")]
+    partial class list
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

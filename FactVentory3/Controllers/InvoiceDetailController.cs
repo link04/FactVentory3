@@ -21,7 +21,7 @@ namespace FactVentory3.Controllers
         }
 
         // GET api/values
-        [HttpGet]
+       [HttpGet]
         public IActionResult Get()
         {
             return Ok(

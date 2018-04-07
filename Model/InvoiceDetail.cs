@@ -18,6 +18,7 @@ namespace Model
         public float UnitPrice { get; set; }  
         public float Total { get; set; }
 
+     
         public virtual Invoice Invoice { get; set; }
         public virtual Product Product { get; set; }
     }

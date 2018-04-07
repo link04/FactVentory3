@@ -13,7 +13,7 @@ namespace Service
          bool Add(InvoiceDetail model);
          bool Delete(int id);
          bool Update(InvoiceDetail model);
-        InvoiceDetail Get(int id);
+        IEnumerable<InvoiceDetail> Get(int id);
          
     }
 
@@ -30,11 +30,14 @@ namespace Service
 
         public IEnumerable<InvoiceDetail> GetAll()
         {
+
             var result = new List<InvoiceDetail>();
 
             try
             {
-                result = _costumerDbContext.InvoiceDetail.ToList();
+                
+              result = _costumerDbContext.InvoiceDetail.ToList();
+               
             }
             catch (System.Exception)
             {
@@ -43,19 +46,24 @@ namespace Service
             return result;
         }
 
-        public InvoiceDetail Get(int id )
+        public IEnumerable<InvoiceDetail> Get(int id )
         {
-            var result = new InvoiceDetail();
+
+            var invoiceDetails = new List<InvoiceDetail>();
 
             try
             {
-                result = _costumerDbContext.InvoiceDetail.Single(x => x.InvoiceDetailId == id);
+                invoiceDetails = _costumerDbContext.InvoiceDetail
+                                              .Where(inv => inv.InvoiceId == id)
+                                              .ToList();
+
             }
             catch (System.Exception)
             {
 
             }
-            return result;
+            return invoiceDetails;
+
         }
 
         public bool Add(InvoiceDetail model)
@@ -85,9 +93,6 @@ namespace Service
                 originalModel.Total = model.Total;
                 originalModel.InvoiceId = model.InvoiceId;
                 originalModel.Product = model.Product;
-
-             
-
                 _costumerDbContext.Update(originalModel);
                 _costumerDbContext.SaveChanges();
             }
