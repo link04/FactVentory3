@@ -2,7 +2,6 @@
 <div>
   <el-table size="small" stripe  :data="data" height="200px"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
     
-         <el-table-column   prop="invoiceId"  label="ID" sortable>  </el-table-column>
          <el-table-column prop="productId"  label="Productos" sortable>   </el-table-column>
          <el-table-column prop="unitPrice"  label="Precio"  sortable>   </el-table-column>
          <el-table-column prop="quantity"  label="Cantidad"   sortable></el-table-column>

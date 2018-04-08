@@ -6,12 +6,11 @@
 
 <div style="background-color:white;padding:40px" >
 
-<el-form v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true" size="mdium" class="demo-ruleForm"> 
+<el-form v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true" size="mini" class="demo-ruleForm"> 
 
      <el-form-item prop="costumer" label="Cliente"  >
       <el-select v-model="form.costumer" >
-      <el-option v-bind:key="item" v-for="item in fullname2" :value="item.fullName">{{item.fullName}}
-         </el-option>
+      <el-option v-bind:key="item" v-for="item in fullname2" :value="item.fullName"></el-option>
      </el-select>
      </el-form-item>
 
@@ -22,7 +21,11 @@
     <el-form-item prop="dueDate" label="Fecha Limite" >
       <el-date-picker type="date" placeholder="Elija su Fecha"  v-model="form.dueDate" style="width: 100%;"></el-date-picker>
   </el-form-item>
-
+<br>
+ <el-form-item>
+    <el-button icon="el-icon-plus" @click="show" type="success">Agregar Producto</el-button>
+  </el-form-item>
+<br>
   <el-form-item label="Notas" prop="notes" >
     <el-input type="textarea" v-model="form.notes" style="width:400px; " placeholder="Ingrese notas de la factura"></el-input>
   </el-form-item>
@@ -60,9 +63,43 @@
 <br>
  
 </el-form>
-<el-button  style="float:left;" size="small" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
+<el-button  style="float:left;" size="mini" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
  
 </div>
+<!--Modaaallll------------------------------------------------------------>
+<modal name="products">
+<el-form v-loading="loading" :model="form2" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true" size="mini" class="demo-ruleForm"> 
+
+     <el-form-item prop="product" label="Seleccione Producto"  size="mini" >
+      <select v-model="form2" class="el-input__inner" style="height:30px" >
+      <option aria-placeholder="Seleccione Producto" v-bind:key="item" v-for="item in productname2" :value="item" >{{item.productName}}</option>
+     </select>
+     </el-form-item>
+     
+
+       <el-form-item  prop="quantity" label="Cantidad"   >  
+          
+          <input class="el-input__inner" style="width:100px;height:30px;" v-model="form2.quantity" v-on:keypress="isNumber(event)">
+       
+  </el-form-item>  
+
+<br>
+     <el-form-item prop="unitPrice" label="Precio"  > 
+          <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"  
+           :value=" form2.unitPrice"  disabled  >
+
+       
+       </el-form-item>  
+
+ <el-form-item prop="total" label="Total" v-model="form2.total" > 
+          
+          <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"   :value="sum()" disabled  >
+      <label  :value="form2.total"></label>
+       </el-form-item>    
+
+</el-form>
+
+</modal>
 
 </div>
 </template>
@@ -70,10 +107,12 @@
 <script>
 export default {
   name: "InvoiceCreateOrUpdate",
+  name: "ProductIndex",
   data() {
     return {
       fullname2: [],
-      ass: "yaasssss",
+   productname2:[],
+ 
       loading: false,
       form: {
         invoiceId: 0,
@@ -91,7 +130,17 @@ export default {
 
         costumer: null,
         company: null
-      }, rules: {
+      },
+       form2: {
+        invoiceId: 0,
+        product:null,
+        productId: 0,
+        unitPrice: 0,
+        quantity: 0,
+        total: 0
+        
+      },
+       rules: {
           amountPaid: [
             { required: true, message: 'Inserte monto', trigger: 'blur' },
           ],
@@ -116,8 +165,21 @@ export default {
   created() {
     let self = this;
     self.getAll();
+    self.get(id);
   },
   methods: {
+    sum(){
+      let total=0;
+      total=this.form2.quantity * this.form2.unitPrice
+      this.form2.total = total;
+      return total;
+    },
+     show () {
+    this.$modal.show('products');
+  },
+  hide () {
+    this.$modal.hide('products');
+  },
     isNumber: function(evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -180,6 +242,23 @@ export default {
       
     }
     ,
+    
+        getAll() {
+      let self = this;
+      self.loading = true;
+      self.$store.state.services.productService
+        .getAll()
+        .then(r => {
+          self.loading = false;
+          self.productname2 = r.data;
+        })
+        .catch(r => {
+          self.$message({
+            message: "Ocurrio un error inesperado.",
+            type: "error"
+          });
+        });
+    },
        save() {
       let self = this;
       self.$refs["ruleForm"].validate(valid => {

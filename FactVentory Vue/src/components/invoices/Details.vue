@@ -139,25 +139,6 @@ export default {
 
       },
      
-      rules: {
-        fullName: [
-          { required: true, message: "Debe ingresar un nombre" },
-          { min: 3, message: "El Nombre debe contener mas de 3 caracteres " }
-        ],
-        email: [
-          { required: true, message: "Debe ingresar un email" },
-          { type: "email", message: "Formato de Email incorrecto" }
-        ],
-        phoneNumber: [
-          { required: true, message: "Debe ingresar un telefono" },
-          {
-            min: 10,
-            max: 10,
-            message: "El telefono de ser un numero de 10 digitos"
-          }
-        ],
-        address: [{ required: true, message: "Debe por lo menos ingresar la ciudad" }]
-      }
     };
   },
   computed: {
