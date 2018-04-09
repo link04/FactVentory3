@@ -47,14 +47,14 @@ export default {
   },
   created() {
     let self = this;
-    self.getAll();
+    self.getAllCM();
   },
   methods: {
-    getAll() {
+    getAllCM() {
       let self = this;
       self.loading = true;
       self.$store.state.services.costumerService
-        .getAll()
+        .getAllCM()
         .then(r => {
           self.loading = false;
           self.data = r.data;
@@ -93,7 +93,7 @@ export default {
           .remove(id)
           .then(r => {
             self.loading = false;
-            self.getAll();
+            self.getAllCM();
           })
           .catch(r => {
             self.$message({

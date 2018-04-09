@@ -54,7 +54,7 @@ export default {
   },
   created() {
     let self = this;
-    self.getAll();
+    self.getAllCP();
   },
   methods: {/*
      setCurrent(row) {
@@ -63,11 +63,11 @@ export default {
       handleCurrentChange(val) {
         this.currentRow = val;
       },*/
-    getAll() {
+    getAllCP() {
       let self = this;
       self.loading = true;
       self.$store.state.services.companyService
-        .getAll()
+        .getAllCP()
         .then(r => {
           self.loading = false;
           self.data = r.data;
@@ -106,7 +106,7 @@ export default {
               .remove(id)
               .then(r => {
                 self.loading = false;
-                self.getAll();
+                self.getAllCP();
               })
               .catch(r => {
                 self.$message({

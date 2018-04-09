@@ -11,7 +11,7 @@ class ProductService {
         let self = this;
         return self.axios.get(`${self.baseUrl}/${id}`);
     }
-    getAll() {
+    getAllPD() {
         let self = this;
         return self.axios.get(`${self.baseUrl}`);
     }

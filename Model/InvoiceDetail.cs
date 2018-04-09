@@ -10,16 +10,14 @@ namespace Model
     {
 
         public int InvoiceDetailId { get; set; }
-
-        public int InvoiceId { get; set; }
+        [ForeignKey("Invoice")]
+        public int? InvoiceId  { get; set; }
+        [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         public float Quantity { get; set; }
         public float UnitPrice { get; set; }  
         public float Total { get; set; }
 
-     
-        public virtual Invoice Invoice { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

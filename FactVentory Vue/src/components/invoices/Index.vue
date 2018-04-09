@@ -6,7 +6,7 @@
   <!-- Default panel contents -->
   <div class="panel-heading"><h2>Facturas </h2> </div>
   <div   style="margin: 15px 0" class="panel-body">
-<el-button  icon="el-icon-plus"  type="primary"  @click="$router.push(`/invoices/add`)">Crear Factura </el-button>
+<el-button  icon="el-icon-plus"  type="primary"  @click="$router.push(`/invoices/${0}/add`)">Crear Factura </el-button>
   </div>
 <!--
 {{moment("1995-12-25").format('L')}} 
@@ -74,7 +74,7 @@ export default {
   },
   created() {
     let self = this;
-    self.getAll();
+    self.getAllIV();
     
   }, 
   mounted:function(){
@@ -86,11 +86,11 @@ export default {
     var res = str.slice(0, 10);
     document.getElementById("demo").innerHTML = res;
 },
-    getAll() {
+    getAllIV() {
       let self = this;
       self.loading = true;
       self.$store.state.services.invoiceService
-        .getAll()
+        .getAllIV()
         .then(r => {
           self.loading = false;
           self.data = r.data;
@@ -103,44 +103,6 @@ export default {
           });
         });
     },
-    remove(id) {
-      let self = this;
-
-      self
-        .$confirm("Estas seguro de realizar esta acción?", "Confirmación", {
-          confirmButtonText: "Si",
-          cancelButtonText: "Cancelar",
-          type: "warning"
-        })
-        .then(() => {
-          _remove();
-          this.$message({
-            type: "success",
-            message: "Acción exitosa"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "Acción cancelada"
-          });
-     });
-          function _remove() {
-            self.$store.state.services.invoiceService
-              .remove(id)
-              .then(r => {
-                self.loading = false;
-                self.getAll();
-              })
-              .catch(r => {
-                self.$message({
-                  message: "Ocurrio un error inesperado.",
-                  type: "error"
-                });
-              });
-          }
-      
-    }
   }
 };
 </script>

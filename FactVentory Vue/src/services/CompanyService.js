@@ -11,7 +11,7 @@ class CompanyService {
         let self = this;
         return self.axios.get(`${self.baseUrl}/${id}`);
     }
-    getAll() {
+    getAllCP() {
         let self = this;
         return self.axios.get(`${self.baseUrl}`);
     }

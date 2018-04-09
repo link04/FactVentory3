@@ -11,9 +11,10 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CostumerDbContext))]
-    partial class CostumerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180408162114_nullingInvoiceFk")]
+    partial class nullingInvoiceFk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,6 +82,10 @@ namespace Persistence.Migrations
 
                     b.HasKey("InvoiceId");
 
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CostumerId");
+
                     b.ToTable("Invoice");
                 });
 
@@ -101,6 +106,10 @@ namespace Persistence.Migrations
 
                     b.HasKey("InvoiceDetailId");
 
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("InvoiceDetail");
                 });
 
@@ -120,6 +129,31 @@ namespace Persistence.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("Model.Invoice", b =>
+                {
+                    b.HasOne("Model.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.Costumer", "Costumer")
+                        .WithMany()
+                        .HasForeignKey("CostumerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.InvoiceDetail", b =>
+                {
+                    b.HasOne("Model.Invoice", "Invoice")
+                        .WithMany("details")
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

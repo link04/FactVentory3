@@ -56,33 +56,12 @@
 <strong><label v-text="form.status"  ></label></strong>
 </div>
  </div>
-
-  <!--<el-table  size="small" stripe  v-loading="loading" :data="data" height="460"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
-      <el-table-column prop="amountPaid"  label="Total Pagado"  sortable></el-table-column>
-      <el-table-column prop="balanceDue"  label="Total Pendiente"  sortable></el-table-column>
-      <el-table-column prop="status"  label="Estado"  sortable></el-table-column>
-      <el-table-column prop="notes"  label="Notas"  sortable></el-table-column>
-      <el-table-column prop="notes"  label="Notas"  sortable></el-table-column>
-    
-  <el-table-column align="center">
-<template slot-scope="scope" >
-<el-button icon="el-icon-edit"  type="warning" title="Editar" @click="$router.push(`/invoices/${scope.row.invoiceId}/edit`)"></el-button>
-<el-button  icon="el-icon-delete" type="danger" title="Eliminar" @click="remove(scope.row.invoiceId)">  </el-button>
-  </template>
-     </el-table-column>
-    
-    </el-table>
-     -->
-
-   
+ 
 </div>
  <div class="bottom-div">
    
 <div class="div-left" style="margin-right: 585px;" >
-  
 <el-button icon="el-icon-printer"  @click="print_pdf()" type="info" >Imprimir</el-button>
-
-
 <el-button  icon="el-icon-share" type="primary"  @click.prevent="sendemail">Enviar a Cliente</el-button>
 </div>
 
@@ -168,7 +147,6 @@ export default {
       
     get(id) {
      if(id == undefined)return;
-
       let self = this;    
   self.loading = true;
 
@@ -198,7 +176,7 @@ export default {
             });  
       
     },
-     remove(id) {
+      remove(id) {
       let self = this;
 
       self
@@ -225,7 +203,7 @@ export default {
               .remove(id)
               .then(r => {
                 self.loading = false;
-                self.getAll();
+                 self.$router.push('/invoices');
               })
               .catch(r => {
                 self.$message({

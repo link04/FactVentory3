@@ -62,51 +62,7 @@ namespace Service
             }
             return result;
         }
-
-        /* = (from costumer in _costumerDbContext.Costumer
-                        where !_costumerDbContext.Invoice.Any(i =>i.CostumerId == costumer.CostumerId)
-                        select costumer.FullName ).ToList()*/
-
-        /* var invoices = _costumerDbContext.Invoice
-                                  .Join(_costumerDbContext.Costumer,
-                                  inv => inv.CostumerId,
-                                  cost => cost.CostumerId,
-                                  (inv, cost) => new { Inv = inv, Cost = cost.FullName })
-                                  .Where(inv => inv.Inv.CostumerId == id);*/
-
-
-        /*
-              List < Invoice > =_costumerDbContext.Invoice
-                                       .Join(_costumerDbContext.Costumer,
-                                        inv => inv.CostumerId,
-                                        cost => cost.CostumerId,
-                                        (inv, cost) => new { Cost = cost.FullName, Inv = inv })
-                                        .Where(invAndCost => invAndCost.Inv.InvoiceId == id);*/
-
-        /*   var invoices = _costumerDbContext.Invoice.Select(i =>
-
-              new
-              {
-                  InvoiceId = i.InvoiceId,
-                  CostumerId = i.CostumerId,
-                  CompanyId = i.CompanyId,
-                  TotalAmount = i.TotalAmount,
-                  AmountPaid = i.AmountPaid,
-                  BalanceDue = i.BalanceDue,
-                  Notes = i.Notes,
-                  InvoiceDate = i.InvoiceDate,
-                  DueDate = i.DueDate,
-                  Status = i.Status,
-                  Costumer = i.Costumer.FullName,
-                  Company = i.Company,
-
-              }).Where(i => i.InvoiceId == id).ToList(); */
-
-
-
-
-
-
+        
         public bool Add(Invoice model)
         {
             try
@@ -142,11 +98,7 @@ namespace Service
                 originalModel.InvoiceDate = model.InvoiceDate;
                 originalModel.DueDate = model.DueDate;
                 originalModel.Status = model.Notes;
-                originalModel.Costumer = model.Costumer;
-                originalModel.Company = model.Company;
-
-
-
+                
                 _costumerDbContext.Update(originalModel);
                 _costumerDbContext.SaveChanges();
             }

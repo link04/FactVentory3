@@ -37,7 +37,7 @@ const routes = [
 
   { path: '/invoices/', name: 'InvoiceIndex', component: InvoiceIndex },
   { path: '/invoices/:id/details', name: 'InvoiceDetails', component: InvoiceDetails },
-  { path: '/invoices/add', name: 'InvoiceCreate', component: InvoiceCreateOrUpdate },
+  { path: '/invoices/:id/add', name: 'InvoiceCreate', component: InvoiceCreateOrUpdate },
   { path: '/invoices/:id/edit', name: 'InvoiceEdit', component: InvoiceCreateOrUpdate },
 
  { path: '/invoiceDetails/:id', name: 'InvoiceDetailsIndex', component: InvoiceDetailIndex },

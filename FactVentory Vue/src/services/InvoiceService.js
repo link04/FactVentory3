@@ -12,12 +12,12 @@ class InvoiceService {
         return self.axios.get(`${self.baseUrl}/${id}`);
     }
     
-    getAll() {
+    getAllIV() {
         let self = this;
         return self.axios.get(`${self.baseUrl}`);
     }
 
-    add(model) {
+    addInvo(model) {
         let self = this;
         return self.axios.post(`${self.baseUrl}`, model);
     }

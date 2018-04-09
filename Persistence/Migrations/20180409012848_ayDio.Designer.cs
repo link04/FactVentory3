@@ -11,9 +11,10 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CostumerDbContext))]
-    partial class CostumerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180409012848_ayDio")]
+    partial class ayDio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

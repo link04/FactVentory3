@@ -39,20 +39,21 @@ export default {
   name: "ProductIndex",
   data() {
     return {
+
       data: [],
       loading: false
     };
   },
   created() {
     let self = this;
-    self.getAll();
+    self.getAllPD();
   },
   methods: {
-    getAll() {
+    getAllPD() {
       let self = this;
       self.loading = true;
       self.$store.state.services.productService
-        .getAll()
+        .getAllPD()
         .then(r => {
           self.loading = false;
           self.data = r.data;
@@ -91,7 +92,7 @@ export default {
               .remove(id)
               .then(r => {
                 self.loading = false;
-                self.getAll();
+                self.getAllPD();
               })
               .catch(r => {
                 self.$message({
@@ -100,7 +101,6 @@ export default {
                 });
               });
           }
-      
     }
   }
 };

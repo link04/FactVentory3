@@ -1,14 +1,28 @@
 <template >
 <div>
-  <el-table size="small" stripe  :data="data" height="200px"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+
+  <el-table size="mini" stripe  :data="data" height="200px" ref="LaSuma"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
     
          <el-table-column prop="productId"  label="Productos" sortable>   </el-table-column>
          <el-table-column prop="unitPrice"  label="Precio"  sortable>   </el-table-column>
          <el-table-column prop="quantity"  label="Cantidad"   sortable></el-table-column>
          <el-table-column prop="total"   label="Total" sortable></el-table-column>  
-  
+   
+    <el-table-column >
+<template slot-scope="scope" >
+              <el-tooltip class="item" effect="dark" content="Eliminar" placement="top-start">
+<el-button style="height:40px;"  v-show="scope.row.invoiceId  === 0 "  icon="el-icon-delete" type="danger"  @click="remove(scope.row.invoiceDetailId)">  </el-button>
+              </el-tooltip>
+  </template>
+     </el-table-column>
+
     </el-table>
+          <el-button   v-if=" id2 < 1 " icon="el-icon-refresh" size="mini" @click="reload" type="primary">Actualizar</el-button>
+   
+        
+
     </div>
+    
 </template>
 
 <script >
@@ -17,7 +31,7 @@ export default {
   name: "InvoiceDetailIndex",
   data() {
     return {
-      //id: this.$route.params.id,
+      id2: this.$route.params.id,
 
       moment: moment,
       data: [ ]
@@ -29,58 +43,24 @@ export default {
   computed: {
     pageTitle() {
       return this.data.invoiceId === 0 ? "Nuevo Cliente" : this.data.invoiceId;
+    },
+    totalRequest(){
+      return this.data.reduce((acc,item) => acc + item.total,0 )
     }
   },
   created() {
     let self = this;
-    self.get(this.$route.params.id);
+    self.getID(this.$route.params.id);
   },
+ 
 
-  methods: {/*
-    getAll() {
-      let self = this;
-      self.loading = true;
-      self.$store.state.services.invoiceDetailService
-
-        .getAll()
-        .then(r => {
-          self.loading = false;
-          self.data = r.data;
-   
-        })
-        .catch(r => {
-          self.$message({
-            message: "Ocurrio un error inesperado.",
-            type: "error"
-          });
-        });
-    } 
-    */
-   get(id) {
- if(id == undefined)return;
-      let self = this;    
-       self.loading = true;
-       self.$store.state.services.invoiceDetailService
-            .get(id)
-            .then(r => {
-              self.loading = false;
-               self.data = r.data;
-               /*
-              self.form.productId = r.data.productId;
-              self.form.quantity = r.data.quantity;
-              self.form.unitPrice = r.data.unitPrice;
-              self.form.total = r.data.total;
-              self.form.invoiceId = r.data.invoiceId;
-              */
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
-              });
-            });      
-},
-    remove(id) {
+  methods: { 
+    
+    reload(){
+          let self = this;
+            self.getID(0);
+  },
+       remove(id) {
       let self = this;
 
       self
@@ -107,7 +87,7 @@ export default {
           .remove(id)
           .then(r => {
             self.loading = false;
-            self.getAll();
+            self.getID(0);
           })
           .catch(r => {
             self.$message({
@@ -116,7 +96,25 @@ export default {
             });
           });
       }
-    }
+    },
+   getID(id) {
+
+      let self = this;    
+       self.loading = true;
+       self.$store.state.services.invoiceDetailService
+            .getID(id)
+            .then(r => {
+              self.loading = false;
+               self.data = r.data;
+           
+            })
+            .catch(r => {
+              self.$message({
+                message: "Ocurrio un error inesperado.",
+                type: "error"
+              });
+            });      
+}
   }
 };
 </script>

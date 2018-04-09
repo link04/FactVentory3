@@ -11,7 +11,7 @@ class CostumerService {
         let self = this;
         return self.axios.get(`${self.baseUrl}/${id}`);
     }
-    getAll() {
+    getAllCM() {
         let self = this;
         return self.axios.get(`${self.baseUrl}`);
     }

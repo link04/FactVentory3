@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Model
@@ -8,7 +9,9 @@ namespace Model
     public class Invoice
     {
         public int InvoiceId { get; set; }
+        [ForeignKey("Costumer")]
         public int CostumerId { get; set; }
+        [ForeignKey("Company")]
         public int CompanyId { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
@@ -24,8 +27,6 @@ namespace Model
         public string Status { get; set; }
         public string Notes { get; set; }
 
-        public List<InvoiceDetail> details { get; set; }
-        public virtual Costumer Costumer { get; set; }
-        public virtual Company Company { get; set; }
+
     }
 }
