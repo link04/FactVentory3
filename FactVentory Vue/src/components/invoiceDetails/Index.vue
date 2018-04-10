@@ -1,9 +1,10 @@
 <template >
 <div>
+  
 
-  <el-table size="mini" stripe  :data="data" height="200px" ref="LaSuma"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+  <el-table size="mini" stripe  :data="data" height="180px" ref="LaSuma"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
     
-         <el-table-column prop="productId"  label="Productos" sortable>   </el-table-column>
+         <el-table-column  prop="producto"  label="Productos" sortable> </el-table-column>
          <el-table-column prop="unitPrice"  label="Precio"  sortable>   </el-table-column>
          <el-table-column prop="quantity"  label="Cantidad"   sortable></el-table-column>
          <el-table-column prop="total"   label="Total" sortable></el-table-column>  
@@ -17,8 +18,9 @@
      </el-table-column>
 
     </el-table>
-          <el-button   v-if=" id2 < 1 " icon="el-icon-refresh" size="mini" @click="reload" type="primary">Actualizar</el-button>
-   
+          <el-button    icon="el-icon-refresh" size="mini" @click="reload" type="primary">Actualizar</el-button>
+
+
         
 
     </div>
@@ -31,11 +33,12 @@ export default {
   name: "InvoiceDetailIndex",
   data() {
     return {
+      
       id2: this.$route.params.id,
-
-      moment: moment,
-      data: [ ]
-      ,
+       moment: moment,
+         productname2:[],
+   prodToInvi:[],
+      data:[] ,
 
       loading: false
     };
@@ -51,6 +54,7 @@ export default {
   created() {
     let self = this;
     self.getID(this.$route.params.id);
+    self.getAllPD();
   },
  
 
@@ -58,7 +62,7 @@ export default {
     
     reload(){
           let self = this;
-            self.getID(0);
+            self.getID(this.$route.params.id);
   },
        remove(id) {
       let self = this;
@@ -114,7 +118,42 @@ export default {
                 type: "error"
               });
             });      
-}
+},
+  get(id) {
+     if(this.data.productId == undefined)return;
+
+      let self = this;    
+
+       self.loading = true;
+       self.$store.state.services.productService
+            .get(this.data.productId)
+            .then(r => {
+              self.loading = false;
+               self.form = r.data;           
+            })
+            .catch(r => {
+              self.$message({
+                message: "Ocurrio un error inesperado.",
+                type: "error"
+              });
+            });      
+    },
+     getAllPD() {
+      let self = this;
+      self.loading = true;
+      self.$store.state.services.productService
+        .getAllPD()
+        .then(r => {
+          self.loading = false;
+          self.productname2 = r.data;
+        })
+        .catch(r => {
+          self.$message({
+            message: "Ocurrio un error inesperado.",
+            type: "error"
+          });
+        });
+    }
   }
 };
 </script>

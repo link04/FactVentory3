@@ -11,9 +11,10 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CostumerDbContext))]
-    partial class CostumerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180409201532_iziDisplay")]
+    partial class iziDisplay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

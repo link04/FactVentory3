@@ -2,19 +2,18 @@
 <div style="float:top;" >
 
   <!-- Default panel contents -->
-  <div class="panel-heading "><h2>Crear Factura</h2></div>
+  <div class="panel-heading "><h2>Editar Factura</h2></div>
 
 <div style="background-color:white;padding:20px" >
 
 <el-form id="myForm" v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true" size="mini" class="demo-ruleForm"> 
 
-     <el-form-item prop="costumer" label="Cliente"  >
+     <el-form-item prop="costumer" :label="`Cliente Actual:`+ form.costumer"  >
       <select v-model="costToInvi" class="el-input__inner" style="width:248px;height:28px" >
       <option  v-bind:key="item" v-for="item in fullname2" :value="item">{{item.fullName}}</option>
      </select>
      </el-form-item>
-
- <el-form-item prop="company" label="Vendedor"  >
+ <el-form-item prop="company" :label="`Vendedor Actual:`+ form.company"   >
       <select v-model="compToInvi" class="el-input__inner" style="width:248px;height:28px" >
       <option v-bind:key="item" v-for="item in fullname3" :value="item">{{item.companyName}}</option>
      </select>
@@ -35,44 +34,17 @@
 <br>
  <br>
 
-   <!--  
-   <table style="height:180px;" class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition el-table--small">
-    
-  <tr  >
-   
-    <th class="col"> Producto</th>
-       <th class="col"> Cantidad</th>
-     <th class="col"> Precio</th>
-       <th class="col"> Total</th>
-        <th class="col"> </th>
-          
-        </tr>
-   
-    <tr  v-bind:key="item" v-for="item in data" >
-      
-       <td v-show="item.invoiceId  === null" >{{ item.productId }}</td>
-       <td v-show="item.invoiceId  === null" >{{ item.quantity }}</td>
-       <td v-show="item.invoiceId  === null" >{{ item.unitPrice }}</td>
-       <td v-show="item.invoiceId  === null" >{{ item.total }}</td>
-       <td v-show="item.invoiceId  === null">   
-      <el-tooltip class="item" effect="dark" content="Eliminar" placement="top-start">
-     <button  class="el-button el-tooltip item el-button--danger" 
-     @click="remove(item.invoiceDetailId)"> <i class="el-icon-delete"></i></button>
-       </el-tooltip>
-      </td>
-   </tr>
-</table>
--->
 <el-row>
   <index> </index>
 </el-row>
     <br>
 
   <el-form-item label="Notas" prop="notes" >
-    <el-input type="textarea" v-model="form.notes" style="width:400px; " placeholder="Ingrese notas de la factura"></el-input>
+    <el-input type="textarea" v-model="form.notes" style="width:400px; " 
+    placeholder="Ingrese notas de la factura"></el-input>
   </el-form-item>
 
-<el-form-item style="float:right; " >
+  <el-form-item style="float:right; " >
       <el-form-item prop="totalAmount"   >
         <label>Monto Total</label><br>
     <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"   v-model="form.totalAmount"  :value="totalRequest()" disabled>
@@ -87,27 +59,28 @@
         <el-form-item prop="balanceDue" > 
            <label>Balance Pendiente</label><br>
           <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"  v-model="form.balanceDue"  disabled  >
-       </el-form-item>   
+       </el-form-item>  
   <br>
         </el-form-item>  
 <br>
       <el-form-item  prop="status"  label="Estado">
     <el-radio-group  v-model="form.status" size="medium">
-      <el-radio  border label="Pago"></el-radio>
+      <el-radio  border  label="Pago"></el-radio>
       <el-radio border label="Pendiente"></el-radio>
     </el-radio-group>
       </el-form-item>
 
 <br>
  <el-form-item>
-    <el-button icon="el-icon-circle-check-outline" size="medium" @click="saveInvo" type="primary">Crear Factura</el-button>
+    <el-button icon="el-icon-circle-check-outline" size="medium" @click="saveInvo" type="primary">Aplicar Cambios</el-button>
   </el-form-item>
 <br>
 </el-form>
 
 <el-button  style="float:left;" size="mini" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
-
 </div>
+{{idInvi}}<br>
+{{form2}}
 <!--Modaaallll------------------------------------------------------------>
 <modal  name="products"  >
 <br>
@@ -148,18 +121,20 @@
 
 </div>
 </modal>
-
-
+<!--Modaaallll------------------------------------------------------------>
 </div>
 </template>
 
 <script>
 import index from "@/components/invoiceDetails/Index";
 
+
 export default {
 
   name: "InvoiceCreateOrUpdate",
+  name: "InvoiceUpdate",
   name: "InvoiceDetailIndex",
+
 
  components: {
     index
@@ -171,13 +146,15 @@ export default {
 
   data() {
     return {
-      fullname3: [],
+     idInvi: this.$route.params.id,
+    fullname3: [],
       fullname2: [],
    productname2:[],
    prodToInvi:[],
     costToInvi:[],
     compToInvi:[],
     data:[],
+
       form: {
         invoiceId: 0,
         costumerId: 0,
@@ -195,8 +172,7 @@ export default {
         costumer:null,
         company:null
 
-      },
-       form2: {
+      },  form2: {
 
       invoiceDetailId:0,
         invoiceId: 0,
@@ -204,26 +180,27 @@ export default {
         unitPrice: 0,
         quantity: 1,
         total: 0,
-        product:null
+        producto:null
 
-      },   
+      },
+     
       loading: false,
        rules: {
           amountPaid: [
             { required: true, message: 'Inserte monto', trigger: 'blur' },
-          ],/*
+          ],
           costumer: [
             { required: true, message: 'Por favor seleccione cliente', trigger: 'change' }
           ],
            company: [
             { required: true, message: 'Por favor seleccione cliente', trigger: 'change' }
-          ],*/
+           ],/*
           invoiceDate: [
-            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'change' }
+            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'blur' }
           ],
           dueDate: [
-            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'change' }
-          ],
+            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'blur' }
+          ],*/
           
            quantity: [
             { required: true, message: 'Por favor ingrese cantidad ', trigger: 'blur' }
@@ -235,18 +212,19 @@ export default {
    
 
   },
+
   created() {
     let self = this;
     self.totalRequest();
     self.getAllCM();
     self.getAllPD();
     self.getAllCP();
-    self.getID(this.$route.params.id);
-    self.saveID();
+    self.getID(self.$route.params.id);
+    self.getInv(self.$route.params.id);
+   self.saveID();
    
     },
-  methods: {
-      clearElements() {
+  methods: { clearElements() {
     // variable declaration
     var x, y, z, type = null, object = [];
     // collect form elements
@@ -286,11 +264,9 @@ export default {
 
      resetForm() {
         this.$refs["ruleForm2"].resetFields();
-
-
-      },
-     totalRequest(){
-       this.form.company = this.compToInvi.companyName;
+     },
+        totalRequest(){
+           this.form.company = this.compToInvi.companyName;
        this.form.companyId = this.compToInvi.companyId;
        this.form.costumerId = this.costToInvi.costumerId;
         this.form.costumer = this.costToInvi.fullName;
@@ -309,7 +285,7 @@ export default {
        }
     
        return total;
-    },
+        },
     getID(id) {
 
       let self = this;    
@@ -330,20 +306,23 @@ export default {
 },
 
     Insert(){
+      this.form2.invoiceId = this.idInvi;
       this.form2.producto = this.prodToInvi.productName;
       this.form2.unitPrice = this.prodToInvi.unitPrice;
       this.form2.productId =  this.prodToInvi.productId;
-      let total=0;
-      total= this.form2.quantity * this.prodToInvi.unitPrice
+
+      let total = 0;
+      total= this.form2.quantity *   this.form2.unitPrice
       this.form2.total = total.toFixed(2);
       return total.toFixed(2);
     },
-    show () {
+
+     show () {
      this.getAllPD();
     this.$modal.show('products');
   },
     hide () {
-       
+      this.totalRequest();
     this.$modal.hide('products');
   
   },
@@ -408,9 +387,8 @@ export default {
           });
         });
     } ,
-     getInv(id) {
+   getInv(id) {
      if(id == undefined)return;
-
       let self = this;    
   self.loading = true;
 
@@ -429,10 +407,9 @@ export default {
               self.form.balanceDue = r.data.balanceDue;
               self.form.status = r.data.status;
               self.form.notes = r.data.notes;
-              self.form.costumer = r.data.status;
-              self.form.producto = r.data.producto;
-             
-             
+              self.form.costumer = r.data.costumer;
+              self.form.company = r.data.company;
+              
             })
             .catch(r => {
               self.$message({
@@ -447,7 +424,7 @@ export default {
       self.$refs["ruleForm"].validate(valid => {
         if (valid) {
          self.loading = true;
-
+ 
            if(self.form.invoiceId > 0 ){
           self.$store.state.services.invoiceService
             .update(self.form)
@@ -466,7 +443,6 @@ export default {
           self.$store.state.services.invoiceService
             .addInvo(self.form)
             .then(r => {
-
               self.loading = false;
               self.$router.push('/invoices');
             })
@@ -512,9 +488,9 @@ export default {
             .addID(self.form2)
             .then(r => {
               self.loading = false;
-               self.getID();
                  self.getAllPD();
-         
+               self.getID(self.$route.params.id);
+               self.getInv(self.$route.params.id);
                   self.$message({
             
                    type: "success",

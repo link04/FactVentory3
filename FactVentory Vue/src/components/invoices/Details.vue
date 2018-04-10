@@ -11,12 +11,12 @@
   <div class="div-left">
 <label   >Vendedor</label>
 <br>
-<el-tag  size="default" prop="companyId" v-text="form.companyId"> </el-tag>
+<el-tag  size="default" prop="companyId" v-text="form.company"> </el-tag>
 <hr>
 
 <label >Cliente</label>
 <br>
-<el-tag  size="default" prop="costumerId" v-text="form.costumerId">  </el-tag>
+<el-tag  size="default" prop="costumerId" v-text="form.costumer">  </el-tag>
 </div>
 
 <div  class="div-right">
@@ -37,9 +37,10 @@
 
  <div >
 <div  class="div-left" >
-<label   >Notas de Factura</label>
+<label   >Notas de Factura:</label>
 <br>
-<el-tag  size="default" prop="notes" v-text="form.notes"> </el-tag>
+<label v-text="form.notes" style="background-color:#E9EEF3;" > </label>
+
 </div>
 
 <div class="div-right">
@@ -121,13 +122,11 @@ export default {
     };
   },
   computed: {
-    pageTitle() {
-      return this.form.costumerId === 0 ? "Nuevo Cliente" : this.form.fullName;
-    } 
+    
   },
   created() {
     let self = this;
-    self.get(self.$route.params.id);
+    self.getInv(self.$route.params.id);
     },
   methods: { 
     print_pdf : function(){
@@ -145,14 +144,14 @@ export default {
       }
       },
       
-    get(id) {
+    getInv(id) {
      if(id == undefined)return;
       let self = this;    
   self.loading = true;
 
        self.$store.state.services.invoiceService
        
-            .get(id)
+            .getInv(id)
             .then(r => {
               self.loading = false;
               self.form.invoiceId = r.data.invoiceId;

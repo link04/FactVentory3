@@ -32,16 +32,16 @@ namespace Service
         public IEnumerable<Invoice> GetAll()
         {
             var result = new List<Invoice>();
-          
+
             try
             {
-          
-              result = _costumerDbContext.Invoice.ToList();
+
+                result = _costumerDbContext.Invoice.ToList();
 
             }
             catch (System.Exception)
             {
-               
+
             }
             return result;
         }
@@ -62,16 +62,26 @@ namespace Service
             }
             return result;
         }
-        
-        public bool Add(Invoice model)
+
+        public  bool Add(Invoice model)
         {
             try
-            { 
+            {
                 _costumerDbContext.Add(model);
                 _costumerDbContext.SaveChanges();
-               
+
+                 var id = model.InvoiceId;
+
+                (from d in _costumerDbContext.InvoiceDetail
+                 where d.InvoiceId == 0
+                 select d).ToList().ForEach(x => x.InvoiceId = id);
+            
+                _costumerDbContext.SaveChanges();
+                
+
             }
-            catch(System.Exception)
+
+            catch (System.Exception)
             {
                 return false;
             }
@@ -93,12 +103,13 @@ namespace Service
                 originalModel.AmountPaid = model.AmountPaid;
                 originalModel.BalanceDue = model.BalanceDue;
                 originalModel.Notes = model.Notes;
-                originalModel.Status = model.Notes;
-                
+
+                originalModel.Status = model.Status;
                 originalModel.InvoiceDate = model.InvoiceDate;
                 originalModel.DueDate = model.DueDate;
-                originalModel.Status = model.Notes;
-                
+                originalModel.Costumer = model.Costumer;
+                originalModel.Company = model.Company;
+
                 _costumerDbContext.Update(originalModel);
                 _costumerDbContext.SaveChanges();
             }

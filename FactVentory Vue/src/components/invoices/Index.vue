@@ -8,20 +8,7 @@
   <div   style="margin: 15px 0" class="panel-body">
 <el-button  icon="el-icon-plus"  type="primary"  @click="$router.push(`/invoices/${0}/add`)">Crear Factura </el-button>
   </div>
-<!--
-{{moment("1995-12-25").format('L')}} 
-<br>
- {{prop='dueDate'}}
-<br>
- {{moment("2016-02-02T00:00:00",moment.ISO_8601).format('L')}}
- <br>
-<span>{{ new Date() | moment("dddd, MMMM Do YYYY") }}</span>
-{{dateeee}}
 
-<p @onload="myDate()" id="demo"> </p>
-<button @click="myDate()">Try it</button>
-<p id="demo"> </p>
--->
  <el-table   height="440px" size="small" stripe  v-loading="loading" :data="data"   highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
 <br>
       <el-table-column  prop="invoiceId"  label="# Factura" width="100" sortable> </el-table-column>
@@ -45,14 +32,7 @@
         <el-button @click="$router.push(`/invoices/${scope.row.invoiceId}/details`)" type="text" size="small">Detail</el-button>
       </template>
     </el-table-column>
-     <!--
-  <el-table-column align="center">
-<template slot-scope="scope" >
-<el-button icon="el-icon-edit"  type="warning" title="Editar" @click="$router.push(`/invoices/${scope.row.invoiceId}/edit`)"></el-button>
-<el-button  icon="el-icon-delete" type="danger" title="Eliminar" @click="remove(scope.row.invoiceId)">  </el-button>
-  </template>
-     </el-table-column>
-     -->
+     
     </el-table>
     </div>
 </div>

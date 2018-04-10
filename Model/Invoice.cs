@@ -8,7 +8,8 @@ namespace Model
 {
     public class Invoice
     {
-        public int InvoiceId { get; set; }
+        public int InvoiceId  { get; set; 
+}
         [ForeignKey("Costumer")]
         public int CostumerId { get; set; }
         [ForeignKey("Company")]
@@ -27,6 +28,7 @@ namespace Model
         public string Status { get; set; }
         public string Notes { get; set; }
 
-
+        public string Costumer { get; set; }
+        public string Company { get; set; }
     }
 }

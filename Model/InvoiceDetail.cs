@@ -15,9 +15,11 @@ namespace Model
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
-        public float Quantity { get; set; }
+        public int Quantity { get; set; }
         public float UnitPrice { get; set; }  
         public float Total { get; set; }
 
+        public string Producto { get; set; }
+  
     }
 }

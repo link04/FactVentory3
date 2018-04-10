@@ -13,6 +13,7 @@ import CompanyCreateOrUpdate from '@/components/companies/CreateOrUpdate'
 import InvoiceIndex from '@/components/invoices/Index'
 import InvoiceDetails from '@/components/invoices/Details'
 import InvoiceCreateOrUpdate from '@/components/invoices/CreateOrUpdate'
+import InvoiceUpdate from '@/components/invoices/Update'
 
 import InvoiceDetailIndex from '@/components/invoiceDetails/Index'
 
@@ -38,7 +39,7 @@ const routes = [
   { path: '/invoices/', name: 'InvoiceIndex', component: InvoiceIndex },
   { path: '/invoices/:id/details', name: 'InvoiceDetails', component: InvoiceDetails },
   { path: '/invoices/:id/add', name: 'InvoiceCreate', component: InvoiceCreateOrUpdate },
-  { path: '/invoices/:id/edit', name: 'InvoiceEdit', component: InvoiceCreateOrUpdate },
+  { path: '/invoices/:id/edit', name: 'InvoiceEdit', component: InvoiceUpdate },
 
  { path: '/invoiceDetails/:id', name: 'InvoiceDetailsIndex', component: InvoiceDetailIndex },
 

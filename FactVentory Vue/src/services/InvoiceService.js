@@ -7,7 +7,7 @@ class InvoiceService {
         this.baseUrl = `${apiUrl}invoice`    
     }
 
-    get(id) {
+    getInv(id) {
         let self = this;
         return self.axios.get(`${self.baseUrl}/${id}`);
     }

@@ -11,9 +11,10 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CostumerDbContext))]
-    partial class CostumerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180409180125_nonclustered")]
+    partial class nonclustered
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,11 +66,7 @@ namespace Persistence.Migrations
 
                     b.Property<float>("BalanceDue");
 
-                    b.Property<string>("Company");
-
                     b.Property<int>("CompanyId");
-
-                    b.Property<string>("Costumer");
 
                     b.Property<int>("CostumerId");
 
@@ -96,8 +93,6 @@ namespace Persistence.Migrations
                     b.Property<int?>("InvoiceId");
 
                     b.Property<int>("ProductId");
-
-                    b.Property<string>("Producto");
 
                     b.Property<int>("Quantity");
 

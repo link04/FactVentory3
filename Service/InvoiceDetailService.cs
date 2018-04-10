@@ -12,7 +12,7 @@ namespace Service
          IEnumerable<InvoiceDetail> GetAll();
          bool Add(InvoiceDetail model);
          bool Delete(int id);
-         bool Update(InvoiceDetail model);
+         bool Update(int id);
         IEnumerable<InvoiceDetail> Get(int id);
          
     }
@@ -54,8 +54,8 @@ namespace Service
             try
             {
                 invoiceDetails = _costumerDbContext.InvoiceDetail
-                                              .Where(inv => inv.InvoiceId == id)
-                                              .ToList();
+                                .Where(inv => inv.InvoiceId == id)
+                                .ToList();
 
             }
             catch (System.Exception)
@@ -72,6 +72,15 @@ namespace Service
             {
                 _costumerDbContext.Add(model);
                 _costumerDbContext.SaveChanges();
+
+                var id = model.ProductId;
+                var quantity = model.Quantity;
+
+                (from p in _costumerDbContext.Product
+                 where p.ProductId == id
+                 select p).ToList().ForEach(x => x.Quantity = (x.Quantity - quantity));
+
+                _costumerDbContext.SaveChanges();
             }
             catch(System.Exception)
             {
@@ -80,18 +89,15 @@ namespace Service
             return true;
         }
 
-        public bool Update(InvoiceDetail model)
+        public bool  Update(int id )
         {
             try
             {
                 var originalModel = _costumerDbContext.InvoiceDetail.Single(x =>
-                x.InvoiceDetailId == model.InvoiceDetailId
+                x.InvoiceId == 0
                 );
-                originalModel.ProductId = model.ProductId;
-                originalModel.Quantity = model.Quantity;
-                originalModel.UnitPrice = model.UnitPrice;
-                originalModel.Total = model.Total;
-                originalModel.InvoiceId = model.InvoiceId;
+               
+                originalModel.InvoiceId = id;
                 
                 _costumerDbContext.Update(originalModel);
                 _costumerDbContext.SaveChanges();
@@ -107,15 +113,26 @@ namespace Service
         {
             try
             {
-                _costumerDbContext.Entry(new InvoiceDetail { InvoiceDetailId = id}).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                var result = _costumerDbContext.InvoiceDetail.Single(x => x.InvoiceDetailId == id);
+                var inventario = _costumerDbContext.Product.Single(x => x.ProductId == result.ProductId);
+
+                inventario.Quantity = (inventario.Quantity + result.Quantity);
+                _costumerDbContext.InvoiceDetail.Remove(_costumerDbContext.InvoiceDetail.Find(id));
+               // _costumerDbContext.Entry(new InvoiceDetail { result.InvoiceDetailId = id }).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
                 _costumerDbContext.SaveChanges();
             }
             catch (System.Exception)
             {
                 return false;
             }
+
+
+           
+
+            
+           
             return true;
         }
-
+       
     }
 }

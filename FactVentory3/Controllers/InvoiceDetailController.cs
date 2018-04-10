@@ -49,10 +49,10 @@ namespace FactVentory3.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        public IActionResult Put([FromBody]InvoiceDetail model)
+        public IActionResult Put([FromBody]int id)
         {
             return Ok(
-                _invoiceDetailService.Update(model)
+                _invoiceDetailService.Update(id)
                 );
         }
 
