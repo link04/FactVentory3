@@ -48,7 +48,6 @@ namespace Service
 
         public IEnumerable<InvoiceDetail> Get(int id )
         {
-
             var invoiceDetails = new List<InvoiceDetail>();
 
             try

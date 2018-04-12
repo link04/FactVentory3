@@ -9,7 +9,7 @@
 <el-button  icon="el-icon-plus"  type="primary"  @click="$router.push(`/salesPersons/add`)">Agregar Vendedor</el-button>
   </div>
   
- <el-table   height="440px" stripe  v-loading="loading" :data="data"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+ <el-table   size="small"  height="440px" stripe  v-loading="loading" :data="data"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
 
    <el-table-column prop="companyName"  label="Vendedor" sortable> </el-table-column>
       <el-table-column prop="email"  label="Email" sortable></el-table-column>
@@ -29,17 +29,7 @@
      </el-table-column>
   </el-table>
   </div>
-<!-- 
-  <div style="margin-top: 20px"> 
-    
-<el-button icon="el-icon-edit" type="warning" @click="$router.push(`/companies/${currentRow.companyId}/edit`)">Editar</el-button>
-    
-<el-button icon="el-icon-delete" type="danger" title="Eliminar" @click="remove(`${currentRow.companyId}`)" >Eliminar</el-button>
 
-<el-button   title="Eliminar" @click="setCurrent()">Deseleccionar</el-button>
-
-  </div>
--->
 </div>
 </template>
 
@@ -56,13 +46,7 @@ export default {
     let self = this;
     self.getAllCP();
   },
-  methods: {/*
-     setCurrent(row) {
-        this.$refs.singleTable.setCurrentRow(row);
-      },
-      handleCurrentChange(val) {
-        this.currentRow = val;
-      },*/
+  methods: {
     getAllCP() {
       let self = this;
       self.loading = true;

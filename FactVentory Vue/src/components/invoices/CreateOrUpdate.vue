@@ -34,35 +34,6 @@
   </el-form-item>
 <br>
  <br>
-
-   <!--  
-   <table style="height:180px;" class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition el-table--small">
-    
-  <tr  >
-   
-    <th class="col"> Producto</th>
-       <th class="col"> Cantidad</th>
-     <th class="col"> Precio</th>
-       <th class="col"> Total</th>
-        <th class="col"> </th>
-          
-        </tr>
-   
-    <tr  v-bind:key="item" v-for="item in data" >
-      
-       <td v-show="item.invoiceId  === null" >{{ item.productId }}</td>
-       <td v-show="item.invoiceId  === null" >{{ item.quantity }}</td>
-       <td v-show="item.invoiceId  === null" >{{ item.unitPrice }}</td>
-       <td v-show="item.invoiceId  === null" >{{ item.total }}</td>
-       <td v-show="item.invoiceId  === null">   
-      <el-tooltip class="item" effect="dark" content="Eliminar" placement="top-start">
-     <button  class="el-button el-tooltip item el-button--danger" 
-     @click="remove(item.invoiceDetailId)"> <i class="el-icon-delete"></i></button>
-       </el-tooltip>
-      </td>
-   </tr>
-</table>
--->
 <el-row>
   <index> </index>
 </el-row>
@@ -127,6 +98,7 @@
   <el-form-item  prop="quantity" label="Cantidad"   >  
           <input class="el-input__inner" type="number" min="1" value="1" :max="this.prodToInvi.quantity"   style="width:248px;height:30px;"  v-model.number="form2.quantity"  >
          </el-form-item>  
+         
      <el-form-item prop="unitPrice" label="Precio"  > 
           <input class="el-input__inner" style="width:248px;height:30px;background-color:lightgray;"    v-model.number="form2.unitPrice"  disabled  >
  
@@ -140,7 +112,7 @@
  <el-form-item style="float:right" >
     <el-button icon="el-icon-circle-plus" @click="saveID"  type="primary">Agregar</el-button>
      <el-button icon="el-icon-circle-close" @click="hide" type="danger">Cerrar</el-button>
-          <el-button @click="clearElements()">Reset</el-button>
+          <el-button @click="clearElements()">Limpiar</el-button>
 
    </el-form-item>
 <br>
@@ -243,7 +215,7 @@ export default {
     self.getAllCP();
     self.getID(this.$route.params.id);
     self.saveID();
-   
+   self.clearElements();
     },
   methods: {
       clearElements() {
@@ -481,9 +453,9 @@ export default {
       });
     },
       saveID() {
- 
-      let self = this;
 
+      let self = this;
+    
       self.$refs["ruleForm2"].validate(valid => {
         if (valid) {
          self.loading = true;
@@ -511,10 +483,13 @@ export default {
           self.$store.state.services.invoiceDetailService
             .addID(self.form2)
             .then(r => {
+             
               self.loading = false;
-               self.getID();
+                this.clearElements()
+               this.getID();
                  self.getAllPD();
-         
+                
+
                   self.$message({
             
                    type: "success",

@@ -3,6 +3,8 @@ using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 
 namespace Service
@@ -14,7 +16,7 @@ namespace Service
          bool Delete(int id);
          bool Update(Invoice model);
         Invoice Get(int id);
-
+        bool Sender(Invoice model);
 
     }
 
@@ -35,9 +37,7 @@ namespace Service
 
             try
             {
-
                 result = _costumerDbContext.Invoice.ToList();
-
             }
             catch (System.Exception)
             {
@@ -63,21 +63,21 @@ namespace Service
             return result;
         }
 
-        public  bool Add(Invoice model)
+        public bool Add(Invoice model)
         {
             try
             {
                 _costumerDbContext.Add(model);
                 _costumerDbContext.SaveChanges();
 
-                 var id = model.InvoiceId;
+                var id = model.InvoiceId;
 
                 (from d in _costumerDbContext.InvoiceDetail
                  where d.InvoiceId == 0
                  select d).ToList().ForEach(x => x.InvoiceId = id);
-            
+
                 _costumerDbContext.SaveChanges();
-                
+
 
             }
 
@@ -124,7 +124,7 @@ namespace Service
         {
             try
             {
-                _costumerDbContext.Entry(new Invoice { InvoiceId = id}).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                _costumerDbContext.Entry(new Invoice { InvoiceId = id }).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
                 _costumerDbContext.SaveChanges();
             }
             catch (System.Exception)
@@ -134,5 +134,51 @@ namespace Service
             return true;
         }
 
+        public bool Sender(Invoice model)
+        {
+
+            var id = model.CostumerId;
+
+           var costumer = _costumerDbContext.Costumer.Single(x => x.CostumerId == id);
+
+            var idMail = costumer.Email;
+
+
+
+            try
+            {
+                MailMessage msg = new MailMessage();
+                msg.From = new MailAddress("FactVentory@gmail.com");
+                msg.To.Add(idMail);
+                msg.Subject = "Correo de Factura.";
+                msg.Body =
+                    "<div>" +
+                        "<h1>Gracias por utlizar nuestros Servicios.</h1>" +
+                        "<br>" +
+                        "<p> Aqui le hacemos envio de su Factura. " +
+                         costumer.FullName + "." +
+                         "<br>" +
+                        "<p>Esperando Escuchar de usted nuevamente FV.</p>" +
+                    "</div>";
+                msg.IsBodyHtml = true;
+                MailAddress ms = new MailAddress(idMail);
+
+                msg.CC.Add(ms);
+                SmtpClient sc = new SmtpClient("smtp.gmail.com");
+                sc.Port = 587;
+                sc.DeliveryMethod = SmtpDeliveryMethod.Network;
+                sc.UseDefaultCredentials = false;
+                sc.Credentials = new NetworkCredential("FactVentory@gmail.com",  model.Company);
+                sc.EnableSsl = true;
+                sc.Send(msg);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            return true;
+
+        }
     }
 }

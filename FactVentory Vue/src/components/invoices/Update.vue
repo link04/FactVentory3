@@ -79,8 +79,7 @@
 
 <el-button  style="float:left;" size="mini" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
 </div>
-{{idInvi}}<br>
-{{form2}}
+
 <!--Modaaallll------------------------------------------------------------>
 <modal  name="products"  >
 <br>
@@ -113,7 +112,7 @@
  <el-form-item style="float:right" >
     <el-button icon="el-icon-circle-plus" @click="saveID"  type="primary">Agregar</el-button>
      <el-button icon="el-icon-circle-close" @click="hide" type="danger">Cerrar</el-button>
-          <el-button @click="clearElements()">Reset</el-button>
+          <el-button @click="clearElements()">Limpiar</el-button>
 
    </el-form-item>
 <br>
@@ -489,7 +488,7 @@ export default {
             .then(r => {
               self.loading = false;
                  self.getAllPD();
-               self.getID(self.$route.params.id);
+                self.resetForm();
                self.getInv(self.$route.params.id);
                   self.$message({
             

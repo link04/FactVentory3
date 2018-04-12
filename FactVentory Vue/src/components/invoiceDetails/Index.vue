@@ -18,7 +18,8 @@
      </el-table-column>
 
     </el-table>
-          <el-button    icon="el-icon-refresh" size="mini" @click="reload" type="primary">Actualizar</el-button>
+
+          <el-button style=" margin-left:15px;"  icon="el-icon-refresh" size="mini" @click="reload" type="primary">Actualizar Listado</el-button>
 
 
         

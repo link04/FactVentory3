@@ -40,7 +40,6 @@
 <label   >Notas de Factura:</label>
 <br>
 <label v-text="form.notes" style="background-color:#E9EEF3;" > </label>
-
 </div>
 
 <div class="div-right">
@@ -61,11 +60,11 @@
 </div>
  <div class="bottom-div">
    
+
 <div class="div-left" style="margin-right: 585px;" >
 <el-button icon="el-icon-printer"  @click="print_pdf()" type="info" >Imprimir</el-button>
 <el-button  icon="el-icon-share" type="primary"  @click.prevent="sendemail">Enviar a Cliente</el-button>
 </div>
-
 <div class="div-right">
     <el-tooltip class="item" effect="dark" content="Editar" placement="top-start">
 <el-button icon="el-icon-edit"  type="warning"  @click="$router.push(`/invoices/${form.invoiceId}/edit`)"></el-button>

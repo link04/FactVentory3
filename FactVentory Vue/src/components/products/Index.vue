@@ -12,7 +12,7 @@
 
 
 
- <el-table   stripe  height="440px"  v-loading="loading" :data="data"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+ <el-table    size="small"  stripe  height="440px"  v-loading="loading" :data="data"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
 
       <el-table-column prop="productName"  label="Producto"  sortable> </el-table-column>
       <el-table-column prop="unitPrice"  label="Precio por Unidad"  sortable></el-table-column>

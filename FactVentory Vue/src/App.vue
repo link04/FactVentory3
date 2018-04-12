@@ -8,7 +8,7 @@
     <el-aside style="width:235px;" >
       <navegationmenu ></navegationmenu>
     </el-aside>
-    <el-container style=" height:710px;" >
+    <el-container >
       <el-main  >
         <el-row>
           <el-col >
