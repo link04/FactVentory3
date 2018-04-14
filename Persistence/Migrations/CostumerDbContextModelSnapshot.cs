@@ -10,7 +10,7 @@ using System;
 
 namespace Persistence.Migrations
 {
-    [DbContext(typeof(CostumerDbContext))]
+    [DbContext(typeof(FactVentoryDbContext))]
     partial class CostumerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

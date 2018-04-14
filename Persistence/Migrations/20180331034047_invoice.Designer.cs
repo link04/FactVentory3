@@ -10,7 +10,7 @@ using System;
 
 namespace Persistence.Migrations
 {
-    [DbContext(typeof(CostumerDbContext))]
+    [DbContext(typeof(FactVentoryDbContext))]
     [Migration("20180331034047_invoice")]
     partial class invoice
     {

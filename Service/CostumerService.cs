@@ -19,10 +19,10 @@ namespace Service
 
     public class CostumerService: ICostumerService
     {
-        private readonly CostumerDbContext _costumerDbContext;
+        private readonly FactVentoryDbContext _costumerDbContext;
 
         public CostumerService(
-            CostumerDbContext costumerDbContext
+            FactVentoryDbContext costumerDbContext
             )
         {
             _costumerDbContext = costumerDbContext;

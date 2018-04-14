@@ -4,7 +4,7 @@ using Model;
 
 namespace Persistence
 {
-    public class CostumerDbContext : DbContext
+    public class FactVentoryDbContext : DbContext
     {
         public DbSet<Costumer> Costumer { get; set; }
         public DbSet<Product> Product { get; set; }
@@ -13,7 +13,7 @@ namespace Persistence
         public DbSet<InvoiceDetail> InvoiceDetail { get; set; }
 
 
-        public CostumerDbContext(DbContextOptions<CostumerDbContext> options)
+        public FactVentoryDbContext(DbContextOptions<FactVentoryDbContext> options)
             :base(options)
         { }
     }

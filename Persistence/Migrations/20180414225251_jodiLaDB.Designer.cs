@@ -11,8 +11,8 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(FactVentoryDbContext))]
-    [Migration("20180331032838_invoiceF")]
-    partial class invoiceF
+    [Migration("20180414225251_jodiLaDB")]
+    partial class jodiLaDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,60 @@ namespace Persistence.Migrations
                     b.HasKey("CostumerId");
 
                     b.ToTable("Costumer");
+                });
+
+            modelBuilder.Entity("Model.Invoice", b =>
+                {
+                    b.Property<int>("InvoiceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("AmountPaid");
+
+                    b.Property<float>("BalanceDue");
+
+                    b.Property<string>("Company");
+
+                    b.Property<int>("CompanyId");
+
+                    b.Property<string>("Costumer");
+
+                    b.Property<int>("CostumerId");
+
+                    b.Property<DateTime>("DueDate");
+
+                    b.Property<DateTime>("InvoiceDate");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<string>("Status");
+
+                    b.Property<float>("TotalAmount");
+
+                    b.HasKey("InvoiceId");
+
+                    b.ToTable("Invoice");
+                });
+
+            modelBuilder.Entity("Model.InvoiceDetail", b =>
+                {
+                    b.Property<int>("InvoiceDetailId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("InvoiceId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<string>("Producto");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<float>("Total");
+
+                    b.Property<float>("UnitPrice");
+
+                    b.HasKey("InvoiceDetailId");
+
+                    b.ToTable("InvoiceDetail");
                 });
 
             modelBuilder.Entity("Model.Product", b =>

@@ -22,10 +22,10 @@ namespace Service
 
     public class InvoiceService : IInvoiceService
     {
-        private readonly CostumerDbContext _costumerDbContext;
+        private readonly FactVentoryDbContext _costumerDbContext;
 
         public InvoiceService(
-            CostumerDbContext costumerDbContext
+            FactVentoryDbContext costumerDbContext
             )
         {
             _costumerDbContext = costumerDbContext;
@@ -173,9 +173,9 @@ namespace Service
                 sc.Send(msg);
 
             }
-            catch (Exception e)
+            catch (System.Exception)
             {
-
+                return false;
             }
             return true;
 

@@ -27,7 +27,7 @@ namespace FactVentory3
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("Dev");
-            services.AddDbContext<CostumerDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<FactVentoryDbContext>(options => options.UseSqlServer(connection));
 
             services.AddTransient<ICostumerService, CostumerService>()
                     .AddTransient<IProductService , ProductService>()

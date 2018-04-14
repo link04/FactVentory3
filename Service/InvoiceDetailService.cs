@@ -19,10 +19,10 @@ namespace Service
 
     public class InvoiceDetailService : IInvoiceDetailService
     {
-        private readonly CostumerDbContext _costumerDbContext;
+        private readonly FactVentoryDbContext _costumerDbContext;
 
         public InvoiceDetailService(
-            CostumerDbContext costumerDbContext
+            FactVentoryDbContext costumerDbContext
             )
         {
             _costumerDbContext = costumerDbContext;
