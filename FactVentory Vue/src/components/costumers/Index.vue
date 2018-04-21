@@ -9,7 +9,6 @@
   </div>
 
 
-
   <el-table  size="small" height="440px" stripe  v-loading="loading" :data="data"   highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
 
       <el-table-column prop="fullName"  label="Cliente"  sortable> </el-table-column>

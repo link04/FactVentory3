@@ -6,38 +6,43 @@
 
 <div style="background-color:white;padding:20px" >
 
-<el-form id="myForm" v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true" size="mini" class="demo-ruleForm"> 
+<el-form id="myForm" v-loading="loading" :model="form" :rules="rules" ref="ruleForm" label-width="60px"  label-position="top" inline="true"  class="demo-ruleForm"> 
 
-     <el-form-item prop="costumer" label="Cliente"  >
-      <select v-model="costToInvi" class="el-input__inner" style="width:248px;height:28px" >
-      <option  v-bind:key="item" v-for="item in fullname2" :value="item">{{item.fullName}}</option>
-     </select>
+           <el-form-item prop="costumer" label="Cliente"  >
+     <el-input  type="text" v-model="searchCostumer"  placeholder="Filtrar Cliente a Elegir"></el-input>
+     <br>
+         <el-select  v-model="form.costumer" >
+           <el-option v-bind:key="costumer" v-for="costumer in filteredCostumers" :value="costumer.fullName" >{{costumer.fullName}} </el-option>
+        </el-select>
      </el-form-item>
-
+  
  <el-form-item prop="company" label="Vendedor"  >
-      <select v-model="compToInvi" class="el-input__inner" style="width:248px;height:28px" >
-      <option v-bind:key="item" v-for="item in fullname3" :value="item">{{item.companyName}}</option>
-     </select>
-     </el-form-item>
+  <el-input  type="text" v-model="searchEmployee"  placeholder="Filtrar Empleado a Elegir"></el-input>
+     <br>
+         <el-select  v-model="form.company" >
+           <el-option v-bind:key="company" v-for="company in filteredEmployees" :value="company.companyName" >{{company.companyName}} </el-option>
+        </el-select>    
+         </el-form-item>
 
-  <el-form-item prop="invoiceDate" label="Fecha de Factura" >
-      <el-date-picker type="date" placeholder="Elija su Fecha" v-model="form.invoiceDate" style="width: 100%;"></el-date-picker>
+  <el-form-item prop="invoiceDate" label="Fecha de Factura"   >
+      <el-date-picker type="date" placeholder="Elija su Fecha"   v-model="form.invoiceDate"  style="width: 100%;"  ></el-date-picker>
   </el-form-item>
 
-    <el-form-item prop="dueDate" label="Fecha Limite" >
-      <el-date-picker type="date" placeholder="Elija su Fecha"  v-model="form.dueDate" style="width: 100%;"></el-date-picker>
+    <el-form-item prop="dueDate" label="Fecha Limite"  >
+      <el-date-picker type="date" placeholder="Elija su Fecha"  v-model="form.dueDate"  style="width: 100%;" ></el-date-picker>
   </el-form-item>
+
 <br>
-
  <el-form-item>
     <el-button icon="el-icon-plus" @click="show" type="success">Agregar Producto</el-button>
   </el-form-item>
 <br>
- <br>
+
+ <!-- <br>
 <el-row>
   <index> </index>
 </el-row>
-    <br>
+    <br> -->
 
   <el-form-item label="Notas" prop="notes" >
     <el-input type="textarea" v-model="form.notes" style="width:400px; " placeholder="Ingrese notas de la factura"></el-input>
@@ -46,18 +51,18 @@
 <el-form-item style="float:right; " >
       <el-form-item prop="totalAmount"   >
         <label>Monto Total</label><br>
-    <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"   v-model="form.totalAmount"  :value="totalRequest()" disabled>
+    <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"   v-model="form.totalAmount"  disabled>
         </el-form-item> 
       
 <br>
       <el-form-item  prop="amountPaid"   >  
           <label>Monto Pagado  </label><br>
-          <input class="el-input__inner" style="width:100px;height:30px;"   v-model="form.amountPaid" v-on:keypress="isNumber(event)"    >
+          <input class="el-input__inner" style="width:100px;height:30px;"   v-model="form.amountPaid"   >
        </el-form-item>  
  <br>
-        <el-form-item prop="balanceDue" > 
+        <el-form-item prop="balanceDue"  v-model="form.balanceDue" > 
            <label>Balance Pendiente</label><br>
-          <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"  v-model="form.balanceDue"  disabled  >
+          <input class="el-input__inner" style="width:100px;height:30px;background-color:lightgray;"   disabled  >
        </el-form-item>   
   <br>
         </el-form-item>  
@@ -79,7 +84,7 @@
 <el-button  style="float:left;" size="mini" icon="el-icon-back"  @click="$router.push(`/invoices`)" type="text">Volver a la Lista</el-button>
 
 </div>
-<!--Modaaallll------------------------------------------------------------>
+<!--Modaaallll----------------------------------------------------------
 <modal  name="products"  >
 <br>
   <label style="padding:20px;padding-top:20px" >Seleccione Producto</label>
@@ -120,43 +125,39 @@
 
 </div>
 </modal>
-
+-->
 
 </div>
 </template>
 
 <script>
-import index from "@/components/invoiceDetails/Index";
+//import index from "@/components/invoiceDetails/Index";
 
 export default {
-
   name: "InvoiceCreateOrUpdate",
   name: "InvoiceDetailIndex",
-
- components: {
+  /*
+  components: {
     index
-  }
-  ,  props: {
-    source: String
   },
-
+  props: {
+    source: String
+  },*/
 
   data() {
     return {
-      fullname3: [],
-      fullname2: [],
-   productname2:[],
-   prodToInvi:[],
-    costToInvi:[],
-    compToInvi:[],
-    data:[],
+      loading: false,
+      costumers: [],
+      searchCostumer:'',
+      companies: [],
+      searchEmployee:'',
       form: {
         invoiceId: 0,
         costumerId: 0,
         companyId: 0,
 
-        invoiceDate: Date,
-        dueDate: Date,
+        invoiceDate: "",
+        dueDate: "",
         totalAmount: 0,
         amountPaid: 0,
         balanceDue: 0,
@@ -164,161 +165,43 @@ export default {
         status: null,
         notes: null,
 
-        costumer:null,
-        company:null
-
-      },
-       form2: {
-
-      invoiceDetailId:0,
+        costumer: null,
+        company: null
+      } /*,
+      form2: {
+        invoiceDetailId: 0,
         invoiceId: 0,
-        productId:0,
+        productId: 0,
         unitPrice: 0,
         quantity: 1,
         total: 0,
-        product:null
-
-      },   
-      loading: false,
-       rules: {
-          amountPaid: [
-            { required: true, message: 'Inserte monto', trigger: 'blur' },
-          ],/*
-          costumer: [
-            { required: true, message: 'Por favor seleccione cliente', trigger: 'change' }
-          ],
-           company: [
-            { required: true, message: 'Por favor seleccione cliente', trigger: 'change' }
-          ],*/
-          invoiceDate: [
-            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'change' }
-          ],
-          dueDate: [
-            { type: 'date', required: true, message: 'Elija Fecha por favor', trigger: 'change' }
-          ],
-          
-           quantity: [
-            { required: true, message: 'Por favor ingrese cantidad ', trigger: 'blur' }
-          ]
-        }
-      };
-  }, 
+        product: null
+      }*/
+    };
+  },
   computed: {
-   
-
+    pageTitle() {
+      return this.form.invoiceId === 0 ? "Nuevo Cliente" : this.form.fullName;
+    },
+    filteredCostumers:function(){
+      return this.costumers.filter((costumer) => {
+        return costumer.fullName.match(this.searchCostumer)
+      });
+    },
+    filteredEmployees:function(){
+      return this.companies.filter((company) => {
+        return company.companyName.match(this.searchEmployee)
+      });
+    }
   },
   created() {
     let self = this;
-    self.totalRequest();
     self.getAllCM();
-    self.getAllPD();
     self.getAllCP();
-    self.getID(this.$route.params.id);
-    self.saveID();
-   self.clearElements();
-    },
+    self.getInv(self.$route.params.id);
+
+  },
   methods: {
-      clearElements() {
-    // variable declaration
-    var x, y, z, type = null, object = [];
-    // collect form elements
-    object[0] = document.getElementById('details').getElementsByTagName('input');
-    object[1] = document.getElementById('details').getElementsByTagName('textarea');
-    object[2] = document.getElementById('details').getElementsByTagName('select');
-    // loop through found form elements
-    for (x = 0; x < object.length; x++) {
-        for (y = 0; y < object[x].length; y++) {
-            // define element type
-            type = object[x][y].type;
-            switch (type) {
-            case 'number':
-            case 'text':
-            case 'textarea':
-            case 'password':
-               object[x][y].value = '';
-                break;
-                object[x][y].value = '';
-                break;
-            case 'radio':
-            case 'checkbox':
-                object[x][y].checked = '';
-                break;
-            case 'option':
-                object[x][y].options[0].selected = true;
-                break;
-            case 'select-multiple':
-                for (z = 0; z < object[x][y].options.length; z++) {
-                    object[x][y].options[z].selected = false;
-                }
-                break;
-            } // end switch
-        } // end for y
-    } // end for x
-},
-
-     resetForm() {
-        this.$refs["ruleForm2"].resetFields();
-
-
-      },
-     totalRequest(){
-       this.form.company = this.compToInvi.companyName;
-       this.form.companyId = this.compToInvi.companyId;
-       this.form.costumerId = this.costToInvi.costumerId;
-        this.form.costumer = this.costToInvi.fullName;
-       let total;
-       total = this.data.reduce((acc,item) => acc + item.total,0 )
-       this.form.totalAmount = total.toFixed(2);
-       let due;
-       due = total - this.form.amountPaid;
-       if(due < 1 )
-       {
-         this.form.status = "Pago"
-          this.form.balanceDue  = 0 ;
-       }else{
-       this.form.status = "Pendiente"
-      this.form.balanceDue  = due.toFixed(2)
-       }
-    
-       return total;
-    },
-    getID(id) {
-
-      let self = this;    
-       self.loading = true;
-       self.$store.state.services.invoiceDetailService
-            .getID(id)
-            .then(r => {
-              self.loading = false;
-               self.data = r.data;
-           
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
-              });
-            });      
-},
-
-    Insert(){
-      this.form2.producto = this.prodToInvi.productName;
-      this.form2.unitPrice = this.prodToInvi.unitPrice;
-      this.form2.productId =  this.prodToInvi.productId;
-      let total=0;
-      total= this.form2.quantity * this.prodToInvi.unitPrice
-      this.form2.total = total.toFixed(2);
-      return total.toFixed(2);
-    },
-    show () {
-     this.getAllPD();
-    this.$modal.show('products');
-  },
-    hide () {
-       
-    this.$modal.hide('products');
-  
-  },
     isNumber: function(evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -331,22 +214,6 @@ export default {
       } else {
         return true;
       }
-    },  
-     getAllCP() {
-      let self = this;
-      self.loading = true;
-      self.$store.state.services.companyService
-        .getAllCP()
-        .then(r => {
-          self.loading = false;
-          self.fullname3 = r.data;
-        })
-        .catch(r => {
-          self.$message({
-            message: "Ocurrio un error inesperado.",
-            type: "error"
-          });
-        });
     },
     getAllCM() {
       let self = this;
@@ -355,7 +222,23 @@ export default {
         .getAllCM()
         .then(r => {
           self.loading = false;
-          self.fullname2 = r.data;
+          self.costumers = r.data;
+        })
+        .catch(r => {
+          self.$message({
+            message: "Ocurrio un error inesperado.",
+            type: "error"
+          });
+        });
+    }, 
+    getAllCP() {
+      let self = this;
+      self.loading = true;
+      self.$store.state.services.companyService
+        .getAllCP()
+        .then(r => {
+          self.loading = false;
+          self.companies = r.data;
         })
         .catch(r => {
           self.$message({
@@ -364,149 +247,73 @@ export default {
           });
         });
     },
-       getAllPD() {
-      let self = this;
-      self.loading = true;
-      self.$store.state.services.productService
-        .getAllPD()
-        .then(r => {
-          self.loading = false;
-          self.productname2 = r.data;
-        })
-        .catch(r => {
-          self.$message({
-            message: "Ocurrio un error inesperado.",
-            type: "error"
-          });
-        });
-    } ,
-     getInv(id) {
-     if(id == undefined)return;
+    // getInv(id) {
+    //  if(id == undefined)return;
 
-      let self = this;    
-  self.loading = true;
+    //   let self = this;
 
-       self.$store.state.services.invoiceService
-       
-            .getInv(id)
-            .then(r => {
-              self.loading = false;
-              self.form.invoiceId = r.data.invoiceId;
-              self.form.costumerId = r.data.costumerId;
-              self.form.companyId = r.data.companyId;
-              self.form.invoiceDate = r.data.invoiceDate;
-              self.form.dueDate = r.data.dueDate;
-              self.form.totalAmount = r.data.totalAmount;
-              self.form.amountPaid = r.data.amountPaid;
-              self.form.balanceDue = r.data.balanceDue;
-              self.form.status = r.data.status;
-              self.form.notes = r.data.notes;
-              self.form.costumer = r.data.status;
-              self.form.producto = r.data.producto;
-             
-             
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
-              });
-            });  
-      
-    }
-    ,saveInvo() {
+    //    self.loading = true;
+    //    self.$store.state.services.invoiceService
+
+    //         .getInv(id)
+    //         .then(r => {
+    //           self.loading = false;
+    //           self.form.invoiceId = r.data.invoiceId;
+    //           self.form.costumerId = r.data.costumerId;
+    //           self.form.companyId = r.data.companyId;
+    //           self.form.invoiceDate = r.data.invoiceDate;
+    //           self.form.dueDate = r.data.dueDate;
+    //           self.form.totalAmount = r.data.totalAmount;
+    //           self.form.amountPaid = r.data.amountPaid;
+    //           self.form.balanceDue = r.data.balanceDue;
+    //           self.form.status = r.data.status;
+    //           self.form.notes = r.data.notes;
+    //           self.form.costumer = r.data.costumer;
+    //           self.form.company = r.data.company;
+
+    //         })
+    //         .catch(r => {
+    //           self.$message({
+    //             message: "Ocurrio un error inesperado.",
+    //             type: "error"
+    //           });
+    //         });
+    // },
+    saveInvo() {
       let self = this;
       self.$refs["ruleForm"].validate(valid => {
         if (valid) {
-         self.loading = true;
+          self.loading = true;
 
-           if(self.form.invoiceId > 0 ){
-          self.$store.state.services.invoiceService
-            .update(self.form)
-            .then(r => {
-              self.loading = false;
-              self.$router.push('/invoices');
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
+          if (self.form.invoiceId > 0) {
+            self.$store.state.services.invoiceService
+              .update(self.form)
+              .then(r => {
+                self.loading = false;
+                self.$router.push("/invoices");
+              })
+              .catch(r => {
+                self.$message({
+                  message: "Ocurrio un error inesperado.",
+                  type: "error"
+                });
               });
-            });
-      }else{ 
-         
-          self.$store.state.services.invoiceService
-            .addInvo(self.form)
-            .then(r => {
-
-              self.loading = false;
-              self.$router.push('/invoices');
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
+          } else {
+            self.$store.state.services.invoiceService
+              .addInvo(self.form)
+              .then(r => {
+                self.loading = false;
+                self.$router.push("/invoices");
+              })
+              .catch(r => {
+                self.$message({
+                  message: "Ocurrio un error inesperado.",
+                  type: "error"
+                });
               });
-            });
-      }
+          }
         }
       });
-    },
-      saveID() {
-
-      let self = this;
-    
-      self.$refs["ruleForm2"].validate(valid => {
-        if (valid) {
-         self.loading = true;
-         
-           
-           if(self.form2.invoiceDetailId > 0 ){
-          self.$store.state.services.invoiceDetailService
-            .update(self.form2)
-            .then(r => {
-              self.loading = false;
-               
-                  self.$message({
-                  type: "success",
-                message: "Producto Agregado."
-              });
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
-              });
-            });
-      }else{ 
-         
-          self.$store.state.services.invoiceDetailService
-            .addID(self.form2)
-            .then(r => {
-             
-              self.loading = false;
-                this.clearElements()
-               this.getID();
-                 self.getAllPD();
-                
-
-                  self.$message({
-            
-                   type: "success",
-                       message: "Producto Agregado."
-              });
-
-            })
-            .catch(r => {
-              self.$message({
-                message: "Ocurrio un error inesperado.",
-                type: "error"
-              });
-            });
-      }
-        }
-      });
-              
     }
   }
 };
