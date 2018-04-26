@@ -15,6 +15,10 @@ overflow: hidden;
 
 }
 
+.modal{
+  width:600px;
+height: 600px; 
+}
 .el-main{
  padding-left:2%;
  padding-right:6%;
@@ -46,21 +50,7 @@ float: right;
     color: whitesmoke;
   text-align: left;
   }
-/*
-.nav{
-  width:240px;
-  background: #2D2F33;
-  position: relative; 
- 
-  height:100vh;
 
-   
-}
-
-.azare{
-  max-height:100vh; /* or whatever width you want.   
-}
-*/
 .el-menu-item{
 
     color:rgba(255, 255, 255, 0.932);

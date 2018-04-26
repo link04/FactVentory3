@@ -45,9 +45,6 @@ export default {
     };
   },
   computed: {
-    pageTitle() {
-      return this.data.invoiceId === 0 ? "Nuevo Cliente" : this.data.invoiceId;
-    },
     totalRequest(){
       return this.data.reduce((acc,item) => acc + item.total,0 )
     }
